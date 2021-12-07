@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Xamarin.Essentials;
 using System;
 using System.Collections.Generic;
+using Android.Content;
 
 namespace AlfaVertion1
 {
@@ -40,6 +41,7 @@ namespace AlfaVertion1
 
         private void Btn1_Click(object sender, EventArgs e)
         {
+            /*
             ThreadStart threadStart1 = new ThreadStart(GPSThreadManager);
             Thread thread1 = new Thread(threadStart1);
             thread1.Start();
@@ -49,6 +51,9 @@ namespace AlfaVertion1
             thread2.Start();
 
             Toast.MakeText(this, "btn", ToastLength.Short).Show();
+            */
+            Intent intent1 = new Intent(this, typeof(RunningExOnGoing));
+            StartActivity(intent1);
         }
 
         private void GPSThreadManager()
