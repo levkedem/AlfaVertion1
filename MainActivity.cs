@@ -15,11 +15,8 @@ namespace AlfaVertion1
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
     public class MainActivity : AppCompatActivity
     {
-        CancellationTokenSource cts;
-        TextView lat, lon, alt, tvdis;
-        Button btn1;
-
-        List<Location> loclist;
+        Button btMakeRunning, btMakeExercise, btRecentWorkouts;
+        
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -27,109 +24,32 @@ namespace AlfaVertion1
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.activity_main);
 
-            this.loclist = new List<Location>();
+            this.btMakeRunning = (Button)FindViewById(Resource.Id.btrunning);
+            this.btMakeExercise = (Button)FindViewById(Resource.Id.btexe);
+            this.btRecentWorkouts = (Button)FindViewById(Resource.Id.btoldStaff);
 
-            lat = (TextView)FindViewById(Resource.Id.textViewlat);
-            lon = (TextView)FindViewById(Resource.Id.textViewlon);
-            alt = (TextView)FindViewById(Resource.Id.textViewalt);
-            tvdis = (TextView)FindViewById(Resource.Id.textViewDis);
-            btn1 = (Button)FindViewById(Resource.Id.buttonGoo);
+            btMakeRunning.Click += BtMakeRunning_Click; 
+            btMakeExercise.Click += BtMakeExercise_Click;
+            btRecentWorkouts.Click += BtRecentWorkouts_Click;
 
-
-            btn1.Click += Btn1_Click;
         }
 
-        private void Btn1_Click(object sender, EventArgs e)
+        private void BtRecentWorkouts_Click(object sender, EventArgs e)
         {
-            /*
-            ThreadStart threadStart1 = new ThreadStart(GPSThreadManager);
-            Thread thread1 = new Thread(threadStart1);
-            thread1.Start();
-
-            ThreadStart threadStart2 = new ThreadStart(DistanceThreadManager);
-            Thread thread2 = new Thread(threadStart2);
-            thread2.Start();
-
-            Toast.MakeText(this, "btn", ToastLength.Short).Show();
-            */
-            Intent intent1 = new Intent(this, typeof(RunningExOnGoing));
-            StartActivity(intent1);
+            throw new NotImplementedException();
         }
 
-        private void GPSThreadManager()
+        private void BtMakeExercise_Click(object sender, EventArgs e)
         {
-            while (true)
-            {                
-                GetCurrentLocation();
-                Thread.Sleep(TimeSpan.FromSeconds(15));
-            }
-        }
-        private void DistanceThreadManager()
-        {
-            while (true)
-            {
-                calcDis();
-                Thread.Sleep(TimeSpan.FromSeconds(6));
-            }
-        }
-        public void calcDis()
-        {
-            double dist = 0;
-            for (int i = 0; i < loclist.Count-1; i++)
-            {
-                dist = dist + 1000*Location.CalculateDistance(loclist[i], loclist[i + 1], DistanceUnits.Kilometers);
-            }
-            RunOnUiThread(() =>
-            {
-                tvdis.Text = "distance: " + dist;
-            });
+            throw new NotImplementedException();
         }
 
-        async Task GetCurrentLocation()//asks for Geolocation
+        private void BtMakeRunning_Click(object sender, EventArgs e)
         {
-            try
-            {                                
-                var request = new GeolocationRequest(GeolocationAccuracy.High, TimeSpan.FromSeconds(30));
-                cts = new CancellationTokenSource();
-                var location1 = await Geolocation.GetLocationAsync(request, cts.Token);
-                
-
-                if (location1 != null)
-                {
-                    loclist.Add(location1);
-                    RunOnUiThread(() =>
-                    {
-                        //Toast.MakeText(this, "have loc", ToastLength.Short).Show();
-                    });
-                    RunOnUiThread(() =>
-                    {
-                        lat.Text = "Latitude" + location1.Latitude;
-                        lon.Text = "Longitude" + location1.Longitude;
-                        alt.Text = "Altitude" + location1.Altitude;                        
-                    });                    
-                }
-                else
-                {
-                    Toast.MakeText(this, "no loc", ToastLength.Short).Show();
-                }                
-            }
-            catch (FeatureNotSupportedException fnsEx)
-            {
-                // Handle not supported on device exception
-            }
-            catch (FeatureNotEnabledException fneEx)
-            {
-                // Handle not enabled on device exception
-            }
-            catch (PermissionException pEx)
-            {
-                // Handle permission exception
-            }
-            catch (Exception ex)
-            {
-                // Unable to get location
-            }
+            Intent i1 = new Intent(this, typeof(Construct_running_Activity));
+            StartActivity(i1);
         }
+
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);

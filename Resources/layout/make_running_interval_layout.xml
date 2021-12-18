@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#DCDCDC">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#808080"
+        android:text="Pace"
+        android:gravity="center_horizontal"
+        android:textColor="#000000"
+        android:textSize="28sp"
+        android:id="@+id/textView2" 
+     />
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"       
+        android:id="@+id/rgPace">
+
+        <RadioButton
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:text="fast"
+            android:textColor="#EB0B01"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:id="@+id/rbFast"
+            />
+        <RadioButton
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:text="medium"
+            android:textColor="#0BD940"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:id="@+id/rbMed"
+            />
+        <RadioButton
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="slow"
+            android:textColor="#004E5E"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:id="@+id/rbSlow"
+            />
+
+    </RadioGroup>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="15dp"
+        android:background="#808080"
+        android:text="Interval Type"
+        android:gravity="center_horizontal"
+        android:textColor="#000000"
+        android:textSize="28sp"
+     />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"       
+        android:id="@+id/rgType">
+
+        <RadioButton
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:text="by time"
+            android:textColor="#E06500"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:checked="true"
+            android:id="@+id/rbFast"
+            />
+        <RadioButton
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:text="by distance"
+            android:textColor="#598DF8"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:id="@+id/rbMed"
+            />
+        
+
+    </RadioGroup>
+    <SeekBar
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="#C9C9C9"
+        android:id="@+id/sb1"
+                />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="#C9C9C9"
+        android:text="3.4 km"
+        android:gravity="center_horizontal"
+        android:textSize="19sp"
+     />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="save"/>
+
+
+</LinearLayout>

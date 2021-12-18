@@ -4,51 +4,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="#DCDCDC"
     android:gravity="center_horizontal"
-    android:background="#88bd">
-
+    android:orientation="vertical"
+    
+    android:theme="@android:style/Theme.Holo.Light.NoActionBar"
+>
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Latitude:"
-        android:textSize="20dp"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="40dp"
+        android:text="run for your life"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textSize="28sp"
         android:textColor="#000000"
-        android:id="@+id/textViewlat"
-        android:layout_marginTop="30dp"
-        />
-     <TextView
-        android:layout_width="wrap_content"
+        android:gravity="center_vertical"
+        
+                />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="@drawable/randommap"/>
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Longitude:"
-        android:textSize="20dp"
-        android:textColor="#000000"
-        android:id="@+id/textViewlon"
-        android:layout_marginTop="30dp"
-        />
-     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Altitude:"
-        android:textSize="20dp"
-        android:textColor="#000000"
-        android:id="@+id/textViewalt"
-        android:layout_marginTop="30dp"
-        />
-     <Button
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="goooo"
-        android:id="@+id/buttonGoo"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="distance:"
-        android:textSize="20dp"
-        android:textColor="#000000"
-        android:id="@+id/textViewDis"
-        android:layout_marginTop="30dp"
-        />
-
+        android:padding="9dp"
+        android:orientation="horizontal">
+        <Button
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/btrunning"
+        android:layout_weight="1"
+            android:fontFamily="monospace"
+        android:text="running
+            "/>
+        <Button
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/btexe"
+        android:layout_weight="1"
+            android:fontFamily="monospace"
+        android:text="exercise
+            "
+            />
+        <Button
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/btoldStaff"
+        android:layout_weight="1"            
+            android:fontFamily="monospace"
+        android:text="recrnt workouts"/>
+        </LinearLayout>
+    
 </LinearLayout>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#DCDCDC">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#B0C4DE"
+        android:text="interval type"
+        android:gravity="center_horizontal"
+        android:textColor="#000000"
+        android:textSize="28sp"
+        android:id="@+id/textView2" 
+     />
+    <EditText
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:id="@+id/etintervalname"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="15dp"
+        android:background="#B0C4DE"
+        android:text="Interval duration"
+        android:gravity="center_horizontal"
+        android:textColor="#000000"
+        android:textSize="28sp"
+     />
+    <SeekBar
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:layout_gravity="center_horizontal"
+        android:background="#C9C9C9"
+        android:id="@+id/sb1"
+                />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="#C9C9C9"
+        android:text="00:00"
+        android:gravity="center_horizontal"
+        android:textSize="19sp"
+     />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="save"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_marginTop="15dp"
+        android:background="#000000"
+        android:text="Interval duration"
+        android:gravity="center_horizontal"
+        android:textColor="#000000"
+        android:textSize="28sp"/>
+
+</LinearLayout>

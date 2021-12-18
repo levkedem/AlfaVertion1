@@ -24,6 +24,7 @@ namespace AlfaVertion1
 
         int time;
         double currentDist;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -34,6 +35,7 @@ namespace AlfaVertion1
             tvDistance = (TextView)FindViewById(Resource.Id.textViewDista);
             tvVelocity = (TextView)FindViewById(Resource.Id.textViewVelo);
             tvTimePerKm = (TextView)FindViewById(Resource.Id.textViewpace);
+            tvIntervalTime = (TextView)FindViewById(Resource.Id.tvTimeForInterval);
 
             loclist = new List<Location>();
             time = 0;            
@@ -107,7 +109,7 @@ namespace AlfaVertion1
         public void calcDis()//calculate distance
         {
             double dist = 0;
-            if (loclist.Count>3)
+            if (loclist.Count>1)
             {
                 for (int i = 0; i < loclist.Count - 1; i++)
                 {
@@ -127,17 +129,20 @@ namespace AlfaVertion1
         }
         public void calcVelocity()//calculate velocity
         {
-            DateTime time0 = loclist[0].Timestamp.UtcDateTime;
-            DateTime timeI = loclist[loclist.Count-1].Timestamp.UtcDateTime;
-            TimeSpan subTime = timeI.Subtract(time0);
-            double hours = subTime.TotalHours;
-
-            double velocity = this.currentDist / hours;
-            string strVel = String.Format("{0:0.00}", velocity/1000);
-            RunOnUiThread(() =>
+            if (loclist.Count > 1)
             {
-                tvVelocity.Text = strVel;
-            });
+                DateTime time0 = loclist[0].Timestamp.UtcDateTime;
+                DateTime timeI = loclist[loclist.Count - 1].Timestamp.UtcDateTime;
+                TimeSpan subTime = timeI.Subtract(time0);
+                double hours = subTime.TotalHours;
+
+                double velocity = this.currentDist / hours;
+                string strVel = String.Format("{0:0.00}", velocity / 1000);
+                RunOnUiThread(() =>
+                {
+                    tvVelocity.Text = strVel;
+                });
+            }
 
         }
         public void calcPace()//calculate current pace
@@ -168,7 +173,7 @@ namespace AlfaVertion1
             double partsToKm = 1000.0 / pacedis;
             double timeForKm = min * partsToKm;
 
-            string strPace = String.Format("{0:0.00}", timeForKm);
+            string strPace = "" + timeForKm / 1 + ":" + ((timeForKm % 1) * 60) / 1;
 
             RunOnUiThread(() =>
             {
