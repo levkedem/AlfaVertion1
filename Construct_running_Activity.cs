@@ -48,9 +48,21 @@ namespace AlfaVertion1
             listView3 = (ListView)FindViewById(Resource.Id.listViewInterval3);
             listView3.Adapter = adapter3;
 
+            this.makeInterval1 = (Button)FindViewById(Resource.Id.BtAddInterval1);
+            this.makeInterval2 = (Button)FindViewById(Resource.Id.BtAddInterval2);
+            this.makeInterval3 = (Button)FindViewById(Resource.Id.BtAddInterval3);
 
 
-            // Create your application here
+
+
+            makeInterval1.Click += MakeInterval1_Click;
+        }
+
+        private void MakeInterval1_Click(object sender, EventArgs e)
+        {
+            Intent intent1 = new Intent(this, typeof(Make_running_Interval_Activity));
+            intent1.PutExtra("listNum",1);
+            StartActivity(intent1);
         }
     }
 }

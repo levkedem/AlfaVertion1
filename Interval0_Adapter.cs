@@ -45,7 +45,21 @@ namespace AlfaVertion1
 
         public override View GetView(int position, View convertView, ViewGroup parent)
         {
-            throw new NotImplementedException();
+            LayoutInflater layoutInflater1 = ((Construct_running_Activity)context).LayoutInflater;
+            View view1 = layoutInflater1.Inflate(Resource.Layout.Running_Interval_listView_layout, parent, false);
+            ImageView imageView1 = view1.FindViewById<ImageView>(Resource.Id.ivRunningSpeed);
+            TextView tvLength1 = view1.FindViewById<TextView>(Resource.Id.tvLength);
+            TextView tvPace1 = view1.FindViewById<TextView>(Resource.Id.tvPace);
+
+                        
+            Interval_v0 temp = intervals[position];
+            if (temp != null)
+            {
+                imageView1.SetImageBitmap(temp.GetBitmap());
+                tvLength1.Text = ""+temp.GetAtrtribute();
+                tvPace1.Text = temp.GetSpeed();
+            }
+            return view1;
         }
     }
 }

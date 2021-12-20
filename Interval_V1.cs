@@ -5,6 +5,7 @@ using System.Text;
 
 using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -16,11 +17,16 @@ namespace AlfaVertion1
     {
         TimeSpan time;
         string speed, type;
-        public Interval_V1(TimeSpan timeSpan, string t)
+        Bitmap photo;
+        public Interval_V1(TimeSpan timeSpan, string t, Bitmap photo)
         {
             this.time = timeSpan;
             this.speed = t;
             this.type = "time";
+        }
+        public override Bitmap GetBitMap()
+        {
+            return this.photo;
         }
         public override int GetAtrtribute()
         {

@@ -5,6 +5,7 @@ using System.Text;
 
 using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -16,7 +17,9 @@ namespace AlfaVertion1
     {
         int distanceM;
         string speed, type;
-        public Interval_v2(int dis, string t)
+        Bitmap photo;
+
+        public Interval_v2(int dis, string t, Bitmap photo)
         {
             this.distanceM = dis;
             this.speed = t;

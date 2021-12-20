@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"       
-        android:id="@+id/rgPace">
+        android:id="@+id/rgPace1">
 
         <RadioButton
             android:layout_width="120dp"
@@ -38,7 +38,8 @@
             android:textColor="#0BD940"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:id="@+id/rbMed"
+            android:checked="true"
+            android:id="@+id/rbMed1"
             />
         <RadioButton
             android:layout_width="100dp"
@@ -47,7 +48,7 @@
             android:textColor="#004E5E"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:id="@+id/rbSlow"
+            android:id="@+id/rbSlow1"
             />
 
     </RadioGroup>
@@ -75,8 +76,7 @@
             android:textColor="#E06500"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:checked="true"
-            android:id="@+id/rbFast"
+            android:id="@+id/rbTime1"
             />
         <RadioButton
             android:layout_width="130dp"
@@ -85,18 +85,12 @@
             android:textColor="#598DF8"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:id="@+id/rbMed"
+            android:id="@+id/rbDis1"
             />
         
 
     </RadioGroup>
-    <SeekBar
-        android:layout_width="240dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:background="#C9C9C9"
-        android:id="@+id/sb1"
-                />
+    
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -105,11 +99,13 @@
         android:text="3.4 km"
         android:gravity="center_horizontal"
         android:textSize="19sp"
+        android:id="@+id/tvTypeShow"
      />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:id="@+id/btSaveInterval"
         android:text="save"/>
 
 
