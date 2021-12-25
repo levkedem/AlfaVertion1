@@ -23,14 +23,15 @@ namespace AlfaVertion1
             this.time = timeSpan;
             this.speed = t;
             this.type = "time";
+            this.photo = photo;
         }
-        public override Bitmap GetBitMap()
+        public override Bitmap GetBitmap()
         {
             return this.photo;
         }
         public override int GetAtrtribute()
         {
-            return this.time.Seconds;
+            return this.time.Seconds + this.time.Minutes * 60;
         }
         public override string GetSpeed()
         {

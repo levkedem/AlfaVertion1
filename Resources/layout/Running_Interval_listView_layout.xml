@@ -11,7 +11,7 @@
         android:layout_height="50dp"
         android:id="@+id/ivRunningSpeed"
         android:layout_marginRight="13dp"
-        android:background="@drawable/slow"/>
+        />
     
     <TextView
         android:layout_width="210dp"

@@ -12,26 +12,37 @@ using Android.Widget;
 
 namespace AlfaVertion1
 {
-    class Exercise
+    public class Exercise
     {
         List<ExPart> parts;
         DateTime date;
+        string name;
         int count;
         int currentPart;
-        public Exercise(List<ExPart> parts)
+        public Exercise(List<ExPart> parts,string n)
         {
             this.parts = parts;
             this.date = DateTime.Now;
+            this.name = n;
+            if (n==null)
+            {
+                this.name = this.date.ToString();
+            }
+            this.currentPart = 0;
+            
         }
 
-        /*public void RunExercise()
+        public Interval_v0 GetCurrentInterval()
         {
-            for (int i = 0; i < parts.Count-1; i++)
+            return this.parts[this.currentPart].getCurrent();
+        }
+        public void Next()
+        {
+            if (parts[currentPart].MoveToNext())
             {
-                parts[i]=null;
+                this.currentPart++;
             }
-
-        }*/
+        }
         public void MoveToNext()
         {
             if (parts[currentPart].MoveToNext())

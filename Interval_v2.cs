@@ -24,11 +24,18 @@ namespace AlfaVertion1
             this.distanceM = dis;
             this.speed = t;
             this.type = "dis";
+            this.photo = photo;
         }
         public override int GetAtrtribute()
         {
             return this.distanceM;
         }
+
+        public override Bitmap GetBitmap()
+        {
+            return this.photo;
+        }
+
         public override string GetSpeed()
         {
             return this.speed;

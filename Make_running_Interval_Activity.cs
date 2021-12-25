@@ -34,7 +34,7 @@ namespace AlfaVertion1
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.Construct_WorkOut_Running);
+            SetContentView(Resource.Layout.make_running_interval_layout);
 
             time = TimeSpan.Zero;
             dis = 0;
@@ -62,19 +62,19 @@ namespace AlfaVertion1
 
         private void Save_Click(object sender, EventArgs e)
         {
-            Bitmap bitmap;
-            if (rbFast.Checked)
+            Bitmap bitmap=null;
+            if (rbFast.Checked == true)
             {
                 speed = "fast";
                 bitmap= BitmapFactory.DecodeResource(Resources, Resource.Drawable.fast);
             }
-            else if (rbMed.Checked)
+            else if (rbMed.Checked == true)
             {
                 speed = "med";
                 bitmap = BitmapFactory.DecodeResource(Resources, Resource.Drawable.steady);
 
             }
-            else
+            else if(rbSlow.Checked == true)
             {
                 speed = "slow";
                 bitmap = BitmapFactory.DecodeResource(Resources, Resource.Drawable.slow);
@@ -82,7 +82,7 @@ namespace AlfaVertion1
 
             if (this.dis!=0)
             {
-                Interval_v2 interval = new Interval_v2((int)this.dis * 1000, speed,bitmap);
+                Interval_v2 interval = new Interval_v2((int)(this.dis * 1000), speed,bitmap);
                 this.interval0 = interval;               
             }
             else if (this.time!=TimeSpan.Zero)
@@ -96,6 +96,7 @@ namespace AlfaVertion1
                 if (intentnum == 1)
                 {
                     Construct_running_Activity.interval_List1.Add(interval0);
+                    
                 }
                 else if (intentnum == 2)
                 {
@@ -151,7 +152,8 @@ namespace AlfaVertion1
             {
                 this.typeCounter.Text = "" + (Convert.ToInt32(etmin.Text) + Convert.ToInt32(etsec.Text) / 60) + ":" + Convert.ToInt32(etsec.Text) % 60;
                 dis = 0;
-                time = TimeSpan.FromMinutes(Convert.ToInt32(etmin.Text) + Convert.ToDouble(etsec.Text) / 60.0);
+                int sec = Convert.ToInt32(etmin.Text) * 60 + Convert.ToInt32(etsec.Text);
+                time = TimeSpan.FromSeconds(sec);
                 d.Dismiss();
             }
         }

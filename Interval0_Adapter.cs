@@ -56,8 +56,23 @@ namespace AlfaVertion1
             if (temp != null)
             {
                 imageView1.SetImageBitmap(temp.GetBitmap());
-                tvLength1.Text = ""+temp.GetAtrtribute();
                 tvPace1.Text = temp.GetSpeed();
+                string s = ""+temp.GetAtrtribute() % 60;
+                if (temp.GetAtrtribute() % 60<10)
+                {
+                    s = "0" + temp.GetAtrtribute() % 60;
+                }
+                if (temp.GetType().Equals("time"))
+                {
+                    
+                    tvLength1.Text = "" + temp.GetAtrtribute() / 60 + ":" + s;
+                }
+                else
+                {
+                    tvLength1.Text = "" + temp.GetAtrtribute()/1000.0;
+                }
+                
+
             }
             return view1;
         }

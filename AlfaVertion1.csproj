@@ -61,6 +61,7 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BroadcastBattery.cs" />
     <Compile Include="Construct_running_Activity.cs" />
     <Compile Include="Exercise.cs" />
     <Compile Include="ExPart.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Interval_v2.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Make_running_Interval_Activity.cs" />
+    <Compile Include="MusicService.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RunningExOnGoing.cs" />
@@ -183,6 +185,9 @@
     <AndroidResource Include="Resources\layout\time_Dialog_Layout.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\raw\Malagueña - Michael Lucarelli,  classical guitar.mp3" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

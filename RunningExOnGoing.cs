@@ -22,14 +22,30 @@ namespace AlfaVertion1
         CancellationTokenSource cts;
         List<Location> loclist;
 
-        int time;
+        int time;//
         double currentDist;
+
+        Exercise exerciseInUse;
+        int intervalTime;//time sec
+        int intervalDis;// dis m
+        bool needsNewInterval;
+
+        int timeWhenIntervalStarted;
+        int indexOfLocationInListWhenIntervalStarted;
+
+        BroadcastBattery broadCastBattery;
+        AlertDialog.Builder builder;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.MasachOnGoing);
+
+            Intent intent = new Intent(this, typeof(MusicService));
+            StopService(intent);
+
+            broadCastBattery = new BroadcastBattery();
 
             tvTimer = (TextView)FindViewById(Resource.Id.tvTime);
             tvDistance = (TextView)FindViewById(Resource.Id.textViewDista);
@@ -38,7 +54,23 @@ namespace AlfaVertion1
             tvIntervalTime = (TextView)FindViewById(Resource.Id.tvTimeForInterval);
 
             loclist = new List<Location>();
-            time = 0;            
+            time = 0;
+            needsNewInterval = true;
+            this.intervalTime = 0;
+            this.intervalDis = 0;
+
+            this.exerciseInUse = Construct_running_Activity.exercise;
+
+            if (broadCastBattery.GetBattery()<20)
+            {
+                builder = new AlertDialog.Builder(this);
+                builder.SetTitle("your battery is very low");
+                builder.SetMessage("charge your phone to start training");
+                builder.SetCancelable(false);
+                builder.SetPositiveButton("back to menu", OkAction);                
+                AlertDialog d2 = builder.Create();
+                d2.Show();
+            }
 
             ThreadStart threadStart1 = new ThreadStart(GPSThreadManager);
             Thread thread1 = new Thread(threadStart1);
@@ -51,6 +83,13 @@ namespace AlfaVertion1
             ThreadStart threadStart3 = new ThreadStart(UpdateTime);
             Thread thread3 = new Thread(threadStart3);
             thread3.Start();
+
+
+        }
+        private void OkAction(object sender, DialogClickEventArgs e)
+        {
+            Intent i1 = new Intent(this, typeof(MainActivity));
+            StartActivity(i1);
         }
         private void GPSThreadManager()//summon GetCurrentLocation every 15 sec
         {
@@ -64,7 +103,7 @@ namespace AlfaVertion1
         {
             try
             {
-                var request = new GeolocationRequest(GeolocationAccuracy.High, TimeSpan.FromSeconds(30));
+                var request = new GeolocationRequest(GeolocationAccuracy.Low, TimeSpan.FromSeconds(30));
                 cts = new CancellationTokenSource();
                 Location location1 = await Geolocation.GetLocationAsync(request, cts.Token);
 
@@ -102,7 +141,7 @@ namespace AlfaVertion1
             {
                 calcDis();
                 calcVelocity();
-                //calcPace();
+                calcPace();
                 Thread.Sleep(TimeSpan.FromSeconds(6));
             }
         }
@@ -165,20 +204,23 @@ namespace AlfaVertion1
                     pacedis = pacedis + tempDis;
                 }
             }
-            DateTime time0 = loclist[i2].Timestamp.UtcDateTime;
-            DateTime timeI = loclist[loclist.Count - 1].Timestamp.UtcDateTime;
-            TimeSpan subTime = timeI.Subtract(time0);
-            double min = subTime.TotalMinutes;
-
-            double partsToKm = 1000.0 / pacedis;
-            double timeForKm = min * partsToKm;
-
-            string strPace = "" + timeForKm / 1 + ":" + ((timeForKm % 1) * 60) / 1;
-
-            RunOnUiThread(() =>
+            if (loclist.Count > 1)
             {
-                tvTimePerKm.Text = strPace;
-            });
+                DateTime time0 = loclist[i2].Timestamp.UtcDateTime;
+                DateTime timeI = loclist[loclist.Count - 1].Timestamp.UtcDateTime;
+                TimeSpan subTime = timeI.Subtract(time0);
+                double min = subTime.TotalMinutes;
+
+                double partsToKm = 1000.0 / pacedis;
+                double timeForKm = min * partsToKm;
+
+                string strPace = "" + timeForKm / 1 + ":" + ((timeForKm % 1) * 60) / 1;
+
+                RunOnUiThread(() =>
+                {
+                    tvTimePerKm.Text = strPace;
+                });
+            }
 
         }
         public void UpdateTime()//do timer
@@ -204,16 +246,103 @@ namespace AlfaVertion1
                 {
                     s = "" + sec;
                 }
+
+                Interval_v0 curInterval = exerciseInUse.GetCurrentInterval();
+                string whatatoShow;
+                if (needsNewInterval)
+                {
+                    whatatoShow = SetNewInterval(curInterval);
+                }
+                else
+                {
+                    if (curInterval.GetType().Equals("time"))
+                    {
+
+                        int numOfSec = (this.timeWhenIntervalStarted + this.intervalTime) - this.time;
+                        if (numOfSec > 0)
+                        {
+                            whatatoShow = TimeSpan.FromSeconds(numOfSec).ToString();
+                        }
+                        else
+                        {
+                            this.exerciseInUse.Next();
+                            whatatoShow = SetNewInterval(curInterval);
+                        }
+                    }
+                    else if (curInterval.GetType().Equals("dis"))
+                    {
+                        int disFormIntervalStart = CalcSpecificDist(this.indexOfLocationInListWhenIntervalStarted);
+                        if (this.intervalDis - disFormIntervalStart > 0)
+                        {
+                            whatatoShow = "" + (this.intervalDis - disFormIntervalStart);
+                        }
+                        else
+                        {
+                            this.exerciseInUse.Next();
+                            whatatoShow = SetNewInterval(curInterval);
+                        }
+                    }
+                }
                 this.time++;
+
                 RunOnUiThread(() =>
                 {
                     tvTimer.Text = m + ":" + s;
                 });
-                
+
                 Thread.Sleep(1000);
             }
         }
-        
+        public int CalcSpecificDist(int startPoint)//calc distance from specific time
+        {
+            double dist = 0;
+            if (loclist.Count > 1)
+            {
+                for (int i = startPoint; i < loclist.Count - 1; i++)
+                {
+                    double tempDis = 1000 * Location.CalculateDistance(loclist[i], loclist[i + 1], DistanceUnits.Kilometers);
+                    if (tempDis > 8)
+                    {
+                        dist = dist + tempDis;
+                    }
+                }
+
+            }
+            return (int)dist;
+        }
+        public string SetNewInterval(Interval_v0 curInterval)
+        {
+            string str="";
+            if (curInterval.GetType().Equals("time"))
+            {
+                this.intervalTime = curInterval.GetAtrtribute();
+                this.intervalDis = 0;
+                this.timeWhenIntervalStarted = this.time;
+                str = TimeSpan.FromSeconds(intervalTime).ToString();
+                needsNewInterval = false;
+            }
+            else if (curInterval.GetType().Equals("dis"))
+            {
+                this.intervalTime = 0;
+                this.intervalDis = curInterval.GetAtrtribute();
+                this.indexOfLocationInListWhenIntervalStarted = this.loclist.Count - 1;
+                str = "" + this.intervalDis;
+                needsNewInterval = false;
+            }
+            return str;
+
+        }
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+            RegisterReceiver(broadCastBattery, new IntentFilter(Intent.ActionBatteryChanged));
+        }
+        protected override void OnPause()
+        {
+            base.OnPause();
+            UnregisterReceiver(broadCastBattery);
+        }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);

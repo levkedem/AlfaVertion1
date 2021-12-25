@@ -12,39 +12,32 @@ using Android.Widget;
 
 namespace AlfaVertion1
 {
-    class ExPart
+    public class ExPart
     {
         List<Interval_v0> intervals;
-        int repeats, currentRep, intervalCount;
+        int repeats, currentRep, currentIntrval;
         public ExPart(int rep, List<Interval_v0> inList)
         {
             this.repeats = rep;
             this.intervals = inList;
-            this.currentRep = 0;
-            this.intervalCount = 0;
+            this.currentRep = 1;
+            this.currentIntrval = 0;
         }
-        /*public void RunPart()
+        public Interval_v0 getCurrent()
         {
-            for (int i = 0; i < this.repeats; i++)
-            {
-                this.intervalCount = 0;
-                for (int j = 0; j < this.intervals.Count-1; j++)
-                {
-                    this.intervalCount = j;
-                }
-                this.repCount++;
-            }
-        }*/
+            return this.intervals[this.currentIntrval];
+        }
         public bool MoveToNext()
         {
-            if (this.intervalCount < this.intervals.Count - 1)
+            if (this.currentIntrval < this.intervals.Count - 1)
             {
-                this.intervalCount++;
+                this.currentIntrval++;
                 return false;
             }
             else if (this.currentRep < this.repeats)
             {
                 this.currentRep++;
+                this.currentIntrval = 0;
                 return false;
             }
             else

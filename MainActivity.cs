@@ -32,6 +32,9 @@ namespace AlfaVertion1
             btMakeExercise.Click += BtMakeExercise_Click;
             btRecentWorkouts.Click += BtRecentWorkouts_Click;
 
+            Intent intent = new Intent(this, typeof(MusicService));
+            StartService(intent);
+
         }
 
         private void BtRecentWorkouts_Click(object sender, EventArgs e)
@@ -41,7 +44,8 @@ namespace AlfaVertion1
 
         private void BtMakeExercise_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            Intent i1 = new Intent(this, typeof(RunningExOnGoing));
+            StartActivity(i1);
         }
 
         private void BtMakeRunning_Click(object sender, EventArgs e)

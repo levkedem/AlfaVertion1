@@ -47,7 +47,7 @@
             
             <ListView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:id="@+id/listViewInterval1"/>
             <Button
                 android:layout_width="wrap_content"
@@ -57,8 +57,17 @@
                 android:text="make interval"/>
             <SeekBar
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="wrap_content"                
                 android:id="@+id/sb1"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:text="repeats:"
+                android:id="@+id/tvRep1"
                 />
 
 
@@ -73,7 +82,7 @@
             
             <ListView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:id="@+id/listViewInterval2"/>
             <Button
                 android:layout_width="wrap_content"
@@ -86,6 +95,16 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/sb2"
                 />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:text="repeats:"
+                android:id="@+id/tvRep2"
+                />
+
 
 
 
@@ -98,7 +117,7 @@
                 />
             <ListView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:id="@+id/listViewInterval3"/>
             <Button
                 android:layout_width="wrap_content"
@@ -111,6 +130,16 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/sb3"
                 />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:text="repeats:"
+                android:id="@+id/tvRep3"
+                />
+                
 
 
             <TextView
