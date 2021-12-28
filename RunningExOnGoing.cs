@@ -45,7 +45,7 @@ namespace AlfaVertion1
             Intent intent = new Intent(this, typeof(MusicService));
             StopService(intent);
 
-            broadCastBattery = new BroadcastBattery();
+            
 
             tvTimer = (TextView)FindViewById(Resource.Id.tvTime);
             tvDistance = (TextView)FindViewById(Resource.Id.textViewDista);
@@ -59,18 +59,17 @@ namespace AlfaVertion1
             this.intervalTime = 0;
             this.intervalDis = 0;
 
-            this.exerciseInUse = Construct_running_Activity.exercise;
+            this.exerciseInUse = Construct_running_Activity.exercise;                      
 
-            if (broadCastBattery.GetBattery()<20)
-            {
-                builder = new AlertDialog.Builder(this);
-                builder.SetTitle("your battery is very low");
-                builder.SetMessage("charge your phone to start training");
-                builder.SetCancelable(false);
-                builder.SetPositiveButton("back to menu", OkAction);                
-                AlertDialog d2 = builder.Create();
-                d2.Show();
-            }
+            
+            builder = new AlertDialog.Builder(this);
+            builder.SetTitle("your battery is very low");
+            builder.SetMessage("charge your phone to start training");
+            builder.SetCancelable(false);
+            builder.SetPositiveButton("back to menu", OkAction);                
+            AlertDialog d2 = builder.Create();
+            broadCastBattery = new BroadcastBattery(d2);
+            
 
             ThreadStart threadStart1 = new ThreadStart(GPSThreadManager);
             Thread thread1 = new Thread(threadStart1);
@@ -248,7 +247,7 @@ namespace AlfaVertion1
                 }
 
                 Interval_v0 curInterval = exerciseInUse.GetCurrentInterval();
-                string whatatoShow;
+                string whatatoShow="eeeeeerrrr";
                 if (needsNewInterval)
                 {
                     whatatoShow = SetNewInterval(curInterval);
@@ -288,6 +287,7 @@ namespace AlfaVertion1
                 RunOnUiThread(() =>
                 {
                     tvTimer.Text = m + ":" + s;
+                    this.tvIntervalTime.Text = whatatoShow;
                 });
 
                 Thread.Sleep(1000);
@@ -300,10 +300,13 @@ namespace AlfaVertion1
             {
                 for (int i = startPoint; i < loclist.Count - 1; i++)
                 {
-                    double tempDis = 1000 * Location.CalculateDistance(loclist[i], loclist[i + 1], DistanceUnits.Kilometers);
-                    if (tempDis > 8)
+                    if (i + 1 < this.loclist.Count - 1)
                     {
-                        dist = dist + tempDis;
+                        double tempDis = 1000 * Location.CalculateDistance(loclist[i], loclist[i + 1], DistanceUnits.Kilometers);
+                        if (tempDis > 8)
+                        {
+                            dist = dist + tempDis;
+                        }
                     }
                 }
 
@@ -325,7 +328,12 @@ namespace AlfaVertion1
             {
                 this.intervalTime = 0;
                 this.intervalDis = curInterval.GetAtrtribute();
-                this.indexOfLocationInListWhenIntervalStarted = this.loclist.Count - 1;
+                int ind = this.loclist.Count - 1;
+                if (ind<0)
+                {
+                    ind = 0;
+                }
+                this.indexOfLocationInListWhenIntervalStarted = ind;
                 str = "" + this.intervalDis;
                 needsNewInterval = false;
             }

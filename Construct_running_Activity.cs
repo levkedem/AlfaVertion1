@@ -53,7 +53,7 @@ namespace AlfaVertion1
             listView3.Adapter = adapter3;
 
             this.cbWarm = (CheckBox)FindViewById(Resource.Id.CHwarmUp);
-            this.cbWarm = (CheckBox)FindViewById(Resource.Id.CHcoolDown);
+            this.cbCool = (CheckBox)FindViewById(Resource.Id.CHcoolDown);
 
 
             this.makeInterval1 = (Button)FindViewById(Resource.Id.BtAddInterval1);
@@ -118,9 +118,10 @@ namespace AlfaVertion1
             {
                 int repit;
                 string repStr = this.rep1.Text;
-                if (repStr.ElementAt(10)!=1)
+                int tempint = repStr.ElementAt(9);
+                if (tempint!=1)
                 {
-                    repit = Convert.ToInt32(repStr.ElementAt(10));
+                    repit = tempint;
                 }
                 else 
                 {
@@ -196,6 +197,8 @@ namespace AlfaVertion1
         private void Finish_Click(object sender, EventArgs e)
         {
             makeExerciseObject();
+            Intent i1 = new Intent(this, typeof(RunningExOnGoing));
+            StartActivity(i1);
         }
 
         private void MakeInterval3_Click(object sender, EventArgs e)//make interval 3
@@ -218,10 +221,31 @@ namespace AlfaVertion1
             intent1.PutExtra("listNum",1);
             StartActivity(intent1);
         }
+        public void ResumeMusic() // move to mainactivity
+        {
+            Intent i = new Intent("music");
+            i.PutExtra("action", 1); // 1 to turn on
+            SendBroadcast(i);
+        }
+
+        public void PauseMusic() // move to main
+        {
+            Intent i = new Intent("music");
+            i.PutExtra("action", 0); // 0 to turn on
+            SendBroadcast(i);
+        }
+
+        protected override void OnPause()
+        {
+            base.OnPause();
+            PauseMusic();
+        }
         protected override void OnResume()
         {
             base.OnResume();
-            
+            if (MainActivity.musicState)
+                ResumeMusic();
+
             //updating listView
             adapter1.NotifyDataSetChanged();
             adapter2.NotifyDataSetChanged();

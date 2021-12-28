@@ -18,14 +18,22 @@ namespace AlfaVertion1
     public class BroadcastBattery : BroadcastReceiver
     {
         int battery;
-        Paint p1;
+        AlertDialog d;
         public BroadcastBattery()
         {
+        }
+        public BroadcastBattery(AlertDialog a)
+        {
+            this.d = a;
         }
         
         public override void OnReceive(Context context, Intent intent)
         {
-            this.battery = intent.GetIntExtra("level", 0);            
+            this.battery = intent.GetIntExtra("level", 0);
+            if (battery<20)
+            {
+                d.Show();
+            }
         }
         public int GetBattery()
         {

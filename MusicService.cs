@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using System.Threading;
 using Android.App;
 using Android.Content;
 using Android.Media;
@@ -21,10 +21,21 @@ namespace AlfaVertion1
         MediaPlayer mp;
         public override StartCommandResult OnStartCommand(Android.Content.Intent intent, StartCommandFlags flags, int startId)
         {
+            ThreadStart threadStart = new ThreadStart(Playm);
+            Thread thread = new Thread(threadStart);
+            thread.Start();
             
-            mp = MediaPlayer.Create(this, Resource.Raw.Malagueña___Michael_Lucarelli___classical_guitar);
-            mp.Start();
             return StartCommandResult.NotSticky;
+        }
+        private void Playm()
+        {
+            this.mp = MediaPlayer.Create(this, Resource.Raw.musica);
+            MainActivity.musicState = true;
+            this.mp.Start();
+        }
+        public void StopForNow()
+        {
+            this.mp.Pause();
         }
 
         public override IBinder OnBind(Intent intent)
