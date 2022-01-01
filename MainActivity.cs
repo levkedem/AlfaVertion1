@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using Android.Content;
 using Android.Views;
+using SQLite;
 
 namespace AlfaVertion1
 {
@@ -18,13 +19,25 @@ namespace AlfaVertion1
     {
         Button btMakeRunning, btMakeExercise, btRecentWorkouts;
         public static bool musicState;
-        
+        public static bool ShowEndingDialog;
+        Dialog d;
+
+        public static List<Exercise> allExerci { get; set; }
+        string path;
+
+        public static Exercise theOneInUse { get; set; }
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.activity_main);
+
+            path = HelperClass.Path();
+            var db = new SQLiteConnection(path);
+            db.CreateTable<Exercise>();
+            MainActivity.allExerci = HelperClass.getAll();
 
             this.btMakeRunning = (Button)FindViewById(Resource.Id.btrunning);
             this.btMakeExercise = (Button)FindViewById(Resource.Id.btexe);
@@ -37,6 +50,9 @@ namespace AlfaVertion1
             Intent intent = new Intent(this, typeof(MyService));
             StartService(intent);
             MainActivity.musicState = true;
+            MainActivity.ShowEndingDialog = false;
+
+            theOneInUse = null;
 
         }
         public override bool OnCreateOptionsMenu(IMenu menu)
@@ -79,7 +95,8 @@ namespace AlfaVertion1
 
         private void BtRecentWorkouts_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            Intent i1 = new Intent(this, typeof(RecentWorkoutsActivity1));
+            StartActivity(i1);
         }
 
         private void BtMakeExercise_Click(object sender, EventArgs e)
@@ -112,11 +129,34 @@ namespace AlfaVertion1
             base.OnPause();
             PauseMusic();
         }
+        public void ShowEndDialogFunc()
+        {
+            d = new Dialog(this);
+            d.SetContentView(Resource.Layout.time_Dialog_Layout);
+            d.SetTitle("exercise ended");
+            d.SetCancelable(true);
+
+            TextView tvExTime = (TextView)d.FindViewById(Resource.Id.tvTime);
+            TextView tvExDis = (TextView)d.FindViewById(Resource.Id.tvDista);
+            TextView tvExPace = (TextView)d.FindViewById(Resource.Id.tvPace);
+
+            int timesec = Intent.GetIntExtra("time", 1);
+            double idistance = Intent.GetDoubleExtra("distance", 1);
+            tvExTime.Text = "time:" + timesec / 60 + ":" + timesec % 60;
+            tvExDis.Text = "distance:" + (((int)idistance) / 100) / 10.0 + "km";
+            tvExPace.Text = "pace:" + (idistance / 1000) / (timesec / 3600.0) + "km/h";
+            d.Show();
+        }
         protected override void OnResume()
         {
             base.OnResume();
             if (musicState)
                 ResumeMusic();
+
+            if (MainActivity.ShowEndingDialog)//if exercise ended
+            {
+                ShowEndDialogFunc();
+            }
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {

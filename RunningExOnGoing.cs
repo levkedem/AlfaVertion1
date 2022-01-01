@@ -36,13 +36,15 @@ namespace AlfaVertion1
         BroadcastBattery broadCastBattery;
         AlertDialog.Builder builder;
 
+        bool ExerciseState;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.MasachOnGoing);
 
-            Intent intent = new Intent(this, typeof(MusicService));
+            Intent intent = new Intent(this, typeof(MyService));
             StopService(intent);
 
             
@@ -59,7 +61,16 @@ namespace AlfaVertion1
             this.intervalTime = 0;
             this.intervalDis = 0;
 
-            this.exerciseInUse = Construct_running_Activity.exercise;                      
+            if (MainActivity.theOneInUse!=null)
+            {
+                this.exerciseInUse = MainActivity.theOneInUse;
+            }
+            else
+            {
+                int num = MainActivity.allExerci.Count;
+                this.exerciseInUse = MainActivity.allExerci[num-1];
+            }
+                                 
 
             
             builder = new AlertDialog.Builder(this);
@@ -69,6 +80,9 @@ namespace AlfaVertion1
             builder.SetPositiveButton("back to menu", OkAction);                
             AlertDialog d2 = builder.Create();
             broadCastBattery = new BroadcastBattery(d2);
+
+            this.exerciseInUse.theEnd += EndExercise;
+            this.ExerciseState = true;
             
 
             ThreadStart threadStart1 = new ThreadStart(GPSThreadManager);
@@ -83,6 +97,19 @@ namespace AlfaVertion1
             Thread thread3 = new Thread(threadStart3);
             thread3.Start();
 
+
+        }
+        public void EndExercise(object s,int n)
+        {
+            Intent.PutExtra("time", this.time);
+            Intent.PutExtra("distance", this.currentDist);
+            MainActivity.ShowEndingDialog = true;
+
+            this.exerciseInUse.timeForThisEx = this.time;
+            this.exerciseInUse.distanceForThisExKM = ((int)this.currentDist / 10) / 100.0;
+
+            Intent i1 = new Intent(this, typeof(MainActivity));
+            StartActivity(i1);
 
         }
         private void OkAction(object sender, DialogClickEventArgs e)
@@ -122,6 +149,7 @@ namespace AlfaVertion1
             }
             catch (FeatureNotEnabledException fneEx)
             {
+                Toast.MakeText(this, "please enable your device GPS", ToastLength.Long).Show();
                 // Handle not enabled on device exception
             }
             catch (PermissionException pEx)

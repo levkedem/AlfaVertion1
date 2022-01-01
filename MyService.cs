@@ -52,9 +52,10 @@ namespace AlfaVertion1
         }
         public override void OnDestroy()
         {
-            base.OnDestroy();
             UnregisterReceiver(this.musicPlayerBroadcast);
             StopSelf();
+            base.OnDestroy();
+            
         }
 
         public override IBinder OnBind(Intent intent)

@@ -9,16 +9,31 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using SQLite;
 
 namespace AlfaVertion1
 {
+    [Table("Archive")]
     public class Exercise
     {
-        List<ExPart> parts;
-        DateTime date;
-        string name;
+        [PrimaryKey, AutoIncrement, Column("_id")]
+        public int id { get; set; }
+
+        public List<ExPart> parts;
+        public DateTime date;
+        public string name { get; set; }
+        public int timeForThisEx { get; set; }
+
+        public double distanceForThisExKM { get; set; }
+
         int count;
         int currentPart;
+        public EventHandler<int> theEnd;
+
+        public Exercise()
+        { 
+        
+        }
         public Exercise(List<ExPart> parts,string n)
         {
             this.parts = parts;
@@ -26,10 +41,17 @@ namespace AlfaVertion1
             this.name = n;
             if (n==null)
             {
-                this.name = this.date.ToString();
+                this.name = "Exercise";
             }
-            this.currentPart = 0;
-            
+            this.currentPart = 0;           
+        }
+
+        public void setExercise(int id, List<ExPart> parts, DateTime date, string name)
+        {
+            this.id = id;
+            this.parts = parts;
+            this.date = date;
+            this.name = name;
         }
 
         public Interval_v0 GetCurrentInterval()
@@ -40,7 +62,12 @@ namespace AlfaVertion1
         {
             if (parts[currentPart].MoveToNext())
             {
-                this.currentPart++;
+                if (this.currentPart+1==this.parts.Count)
+                {
+                    this.theEnd.Invoke(this,1);
+                }
+                else
+                    this.currentPart++;
             }
         }
         public void MoveToNext()

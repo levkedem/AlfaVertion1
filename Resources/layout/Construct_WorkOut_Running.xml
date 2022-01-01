@@ -148,15 +148,28 @@
                 android:background="#808080"
                 android:textSize="28sp"
                 />
-            <Button
+            
+
+                <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="center"
                 android:layout_marginTop="7dp"
                 android:id="@+id/BtFinish"
                 android:background="#B0C4DE"
                 android:text="Finish"/>
 
+                <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="7dp"
+                android:id="@+id/BtAddToArc"
+                android:background="#B0C4DE"
+                android:text="add to Archive"/>
+
+               
+            
         </LinearLayout>
 
     </ScrollView>

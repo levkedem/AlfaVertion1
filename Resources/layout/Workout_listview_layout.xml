@@ -21,6 +21,7 @@
         android:layout_marginRight="30dp"
         android:textColor="#000000"
         android:fontFamily="monospace"
+        android:id="@+id/tvName"
         />
     <TextView
         android:layout_width="wrap_content"
@@ -29,6 +30,7 @@
         android:textSize="25dp"
         android:textColor="#000000"
         android:fontFamily="monospace"
+        android:id="@+id/tvDate"
         />
 
 </LinearLayout>

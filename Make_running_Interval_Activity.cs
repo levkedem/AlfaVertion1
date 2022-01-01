@@ -157,5 +157,30 @@ namespace AlfaVertion1
                 d.Dismiss();
             }
         }
+        public void ResumeMusic() // move to mainactivity
+        {
+            Intent i = new Intent("music");
+            i.PutExtra("action", 1); // 1 to turn on
+            SendBroadcast(i);
+        }
+
+        public void PauseMusic() // move to main
+        {
+            Intent i = new Intent("music");
+            i.PutExtra("action", 0); // 0 to turn on
+            SendBroadcast(i);
+        }
+
+        protected override void OnPause()
+        {
+            base.OnPause();
+            PauseMusic();
+        }
+        protected override void OnResume()
+        {
+            base.OnResume();
+            if (MainActivity.musicState)
+                ResumeMusic();
+        }
     }
 }
