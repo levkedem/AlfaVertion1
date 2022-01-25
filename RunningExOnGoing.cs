@@ -38,6 +38,8 @@ namespace AlfaVertion1
 
         bool ExerciseState;
 
+        Thread thread1, thread2, thread3;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -70,6 +72,7 @@ namespace AlfaVertion1
                 int num = MainActivity.allExerci.Count;
                 this.exerciseInUse = MainActivity.allExerci[num-1];
             }
+            this.exerciseInUse.StartEx();
                                  
 
             
@@ -86,15 +89,15 @@ namespace AlfaVertion1
             
 
             ThreadStart threadStart1 = new ThreadStart(GPSThreadManager);
-            Thread thread1 = new Thread(threadStart1);
+            thread1 = new Thread(threadStart1);
             thread1.Start();
 
             ThreadStart threadStart2 = new ThreadStart(DistanceThreadManager);
-            Thread thread2 = new Thread(threadStart2);
+            thread2 = new Thread(threadStart2);
             thread2.Start();
 
             ThreadStart threadStart3 = new ThreadStart(UpdateTime);
-            Thread thread3 = new Thread(threadStart3);
+            thread3 = new Thread(threadStart3);
             thread3.Start();
 
 
@@ -108,6 +111,7 @@ namespace AlfaVertion1
             this.exerciseInUse.timeForThisEx = this.time;
             this.exerciseInUse.distanceForThisExKM = ((int)this.currentDist / 10) / 100.0;
 
+            ExerciseState = false;            
             Intent i1 = new Intent(this, typeof(MainActivity));
             StartActivity(i1);
 
@@ -119,7 +123,7 @@ namespace AlfaVertion1
         }
         private void GPSThreadManager()//summon GetCurrentLocation every 15 sec
         {
-            while (true)
+            while (ExerciseState)
             {
                 GetCurrentLocation();
                 Thread.Sleep(TimeSpan.FromSeconds(15));
@@ -164,7 +168,7 @@ namespace AlfaVertion1
         private void DistanceThreadManager()//summon calcDis and calcVelocity every 6 sec
         {
             Thread.Sleep(TimeSpan.FromSeconds(30));
-            while (true)
+            while (ExerciseState)
             {
                 calcDis();
                 calcVelocity();
@@ -252,7 +256,7 @@ namespace AlfaVertion1
         }
         public void UpdateTime()//do timer
         {
-            while (true)
+            while (ExerciseState)
             {
                 int min = this.time / 60;
                 int sec = this.time - min * 60;

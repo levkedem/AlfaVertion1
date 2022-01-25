@@ -37,16 +37,14 @@
         android:id="@+id/btrunning"
         android:layout_weight="1"
             android:fontFamily="monospace"
-        android:text="running
-            "/>
+        android:text="running"/>
         <Button
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:id="@+id/btexe"
         android:layout_weight="1"
             android:fontFamily="monospace"
-        android:text="exercise
-            "
+        android:text="exercise"
             />
         <Button
         android:layout_width="100dp"

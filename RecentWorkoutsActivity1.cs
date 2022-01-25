@@ -63,9 +63,33 @@ namespace AlfaVertion1
                 adapter1.NotifyDataSetChanged();
             }
         }
+        public void ResumeMusic()
+        {
+            Intent i = new Intent("music");
+            i.PutExtra("action", 1); // 1 to turn on
+            SendBroadcast(i);
+        }
 
-        
+        public void PauseMusic()
+        {
+            Intent i = new Intent("music");
+            i.PutExtra("action", 0); // 0 to turn on
+            SendBroadcast(i);
+        }
 
+        protected override void OnPause()
+        {
+            base.OnPause();
+            PauseMusic();
+        }
+        protected override void OnResume()
+        {
+            base.OnResume();
+            if (MainActivity.musicState)
+                ResumeMusic();
+
+           
+        }
         protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
         {
             base.OnActivityResult(requestCode, resultCode, data);

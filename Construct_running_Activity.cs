@@ -245,14 +245,14 @@ namespace AlfaVertion1
             adapter3.NotifyDataSetChanged();
 
         }
-        public void ResumeMusic() // move to mainactivity
+        public void ResumeMusic()
         {
             Intent i = new Intent("music");
             i.PutExtra("action", 1); // 1 to turn on
             SendBroadcast(i);
         }
 
-        public void PauseMusic() // move to main
+        public void PauseMusic() 
         {
             Intent i = new Intent("music");
             i.PutExtra("action", 0); // 0 to turn on

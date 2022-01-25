@@ -37,6 +37,7 @@ namespace AlfaVertion1
             path = HelperClass.Path();
             var db = new SQLiteConnection(path);
             db.CreateTable<Exercise>();
+            //db.DeleteAll<Exercise>();
             MainActivity.allExerci = HelperClass.getAll();
 
             this.btMakeRunning = (Button)FindViewById(Resource.Id.btrunning);

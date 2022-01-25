@@ -39,13 +39,20 @@ namespace AlfaVertion1
             this.parts = parts;
             this.date = DateTime.Now;
             this.name = n;
-            if (n==null)
+            if (n=="")
             {
                 this.name = "Exercise";
             }
             this.currentPart = 0;           
         }
-
+        public void StartEx()
+        {
+            this.currentPart = 0;
+            for (int i = 0; i < parts.Count-1; i++)
+            {
+                parts[i].StartPart();
+            }
+        }
         public void setExercise(int id, List<ExPart> parts, DateTime date, string name)
         {
             this.id = id;

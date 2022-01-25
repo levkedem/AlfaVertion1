@@ -23,6 +23,12 @@ namespace AlfaVertion1
             this.currentRep = 1;
             this.currentIntrval = 0;
         }
+
+        public void StartPart()
+        {
+            this.currentRep = 1;
+            this.currentIntrval = 0;
+        }
         public Interval_v0 getCurrent()
         {
             return this.intervals[this.currentIntrval];
