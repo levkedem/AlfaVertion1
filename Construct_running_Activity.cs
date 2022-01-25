@@ -181,7 +181,7 @@ namespace AlfaVertion1
                 int repit2 = repnum2;
                 string repStr2 = this.rep2.Text;
                 
-                ExPart p2 = new ExPart(repit2, interval_List1);
+                ExPart p2 = new ExPart(repit2, interval_List2);
                 parts.Add(p2);
             }
             if (interval_List3.Count > 0)
@@ -189,7 +189,7 @@ namespace AlfaVertion1
                 int repit3 = repnum3;
                 string repStr3 = this.rep2.Text;
                 
-                ExPart p3 = new ExPart(repit3, interval_List1);
+                ExPart p3 = new ExPart(repit3, interval_List3);
                 parts.Add(p3);
             }
             if (this.cbCool.Checked)

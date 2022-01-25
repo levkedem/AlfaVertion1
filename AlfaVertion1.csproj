@@ -67,6 +67,7 @@
     <Compile Include="Exercise_End_Activity.cs" />
     <Compile Include="Exercise.cs" />
     <Compile Include="ExPart.cs" />
+    <Compile Include="FirebaseHelper.cs" />
     <Compile Include="HelperClass.cs" />
     <Compile Include="Interval0_Adapter.cs" />
     <Compile Include="Interval_v0.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="RunningExOnGoing.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml" />
     <None Include="Assets\AboutAssets.txt" />
@@ -116,6 +118,9 @@
     <AndroidResource Include="Resources\layout\Constract_Normal_Train_layout.xml" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="FirebaseDatabase.net">
+      <Version>4.0.7</Version>
+    </PackageReference>
     <PackageReference Include="sqlite-net-pcl">
       <Version>1.8.116</Version>
     </PackageReference>

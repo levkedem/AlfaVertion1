@@ -26,6 +26,13 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:background="@drawable/randommap"/>
+
+    <!--  <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+          android:id="@+id/map"
+          android:layout_width="match_parent"
+          android:layout_height="100dp"
+          android:class="com.google.android.gms.maps.MapFragment" /> -->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,16 +43,9 @@
         android:layout_height="100dp"
         android:id="@+id/btrunning"
         android:layout_weight="1"
-            android:fontFamily="monospace"
+        android:fontFamily="monospace"
         android:text="running"/>
-        <Button
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:id="@+id/btexe"
-        android:layout_weight="1"
-            android:fontFamily="monospace"
-        android:text="exercise"
-            />
+        
         <Button
         android:layout_width="100dp"
         android:layout_height="100dp"

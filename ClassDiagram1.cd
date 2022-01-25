@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="AlfaVertion1.Construct_running_Activity">
+    <Position X="8.75" Y="3.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>CADgABQAGgAAAYgEAICAAAAECSAoAAAcABwCCJACQQA=</HashCode>
+      <FileName>Construct_running_Activity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AlfaVertion1.Make_running_Interval_Activity">
+    <Position X="11.75" Y="3.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAABBAAACKCAkAgAAgAAQECQBTAAAQAECAEIADAASAA=</HashCode>
+      <FileName>Make_running_Interval_Activity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AlfaVertion1.MainActivity">
+    <Position X="14.5" Y="3.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACEKAQQEEgAIAACAAAAiCAAgAAEAABKCBAAQAA=</HashCode>
+      <FileName>MainActivity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AlfaVertion1.RecentWorkoutsActivity1">
+    <Position X="5.5" Y="3.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAgUAAACAAAEACAAAAAAAAAAAJAAQAA=</HashCode>
+      <FileName>RecentWorkoutsActivity1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AlfaVertion1.RunningExOnGoing">
+    <Position X="0.5" Y="3.25" Width="3" />
+    <TypeIdentifier>
+      <HashCode>ASQBAgABAhAAAT5AJAAAAwQAASQLAISAISBAAB4AAAA=</HashCode>
+      <FileName>RunningExOnGoing.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AlfaVertion1.Exercise">
+    <Position X="18.75" Y="1.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AgABIgABAAAAEAAABAAAAAAAAAEEACAABAAAAQAEAgA=</HashCode>
+      <FileName>Exercise.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AlfaVertion1.ExerciseAdapter1">
+    <Position X="20.5" Y="8.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAICAAAAAAAAAAAACAAAAAQAAQAAAAAAAAABAAAAAAA=</HashCode>
+      <FileName>ExerciseAdapter1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AlfaVertion1.ExPart">
+    <Position X="16" Y="13.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAACAAAAAAAAAAAAACBAAAAAAAABAAAAAIAgAA=</HashCode>
+      <FileName>ExPart.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AlfaVertion1.Interval_v0">
+    <Position X="24.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAEACAEAAAAAAAAAAAA=</HashCode>
+      <FileName>Interval_v0.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AlfaVertion1.Interval_V1">
+    <Position X="23.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAIAAAgAAAAAAAAAAAAAEBCQEAAAAAAAAAAAA=</HashCode>
+      <FileName>Interval_V1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AlfaVertion1.Interval_v2">
+    <Position X="25.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAgAAAAAAAAAAAAEEBCQEAAAAAAAAAAAA=</HashCode>
+      <FileName>Interval_v2.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AlfaVertion1.Interval0_Adapter">
+    <Position X="18" Y="8.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAICAAAAAAAAAEAACAAAAASAAAAAAAAAAAABAgAAAAA=</HashCode>
+      <FileName>Interval0_Adapter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AlfaVertion1.BroadcastBattery">
+    <Position X="11" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAACAAAAAAAAAAAAAAAIEAAAAAAAAAAA=</HashCode>
+      <FileName>BroadcastBattery.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AlfaVertion1.MusicPlayerBroadcastReciever">
+    <Position X="13" Y="14.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAQAAAAAAAAAAAAAAAAAAAAAAQCAAAAAAA=</HashCode>
+      <FileName>MusicPlayerBroadcastReciever .cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Android.Content.BroadcastReceiver" Collapsed="true">
+    <Position X="12" Y="13.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="AlfaVertion1.MyService">
+    <Position X="4.5" Y="13.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAhAAAAAAAgAIAAAAAAUAAAACAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>MyService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Android.App.Service" Collapsed="true">
+    <Position X="4.75" Y="12" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Android.App.Activity" Collapsed="true">
+    <Position X="3" Y="1.75" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Android.Widget.BaseAdapter&lt;T&gt;" Collapsed="true">
+    <Position X="19.5" Y="7" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Android.Support.V7.App.AppCompatActivity" Collapsed="true">
+    <Position X="14.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

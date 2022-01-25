@@ -6,11 +6,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Xamarin.Essentials;
+
 
 namespace AlfaVertion1
 {
@@ -18,6 +20,8 @@ namespace AlfaVertion1
     public class RunningExOnGoing : Activity
     {
         TextView tvTimer, tvDistance, tvVelocity, tvTimePerKm, tvIntervalTime;
+        ImageView icon;
+        Bitmap bitPouse, bitPlay;
 
         CancellationTokenSource cts;
         List<Location> loclist;
@@ -37,6 +41,7 @@ namespace AlfaVertion1
         AlertDialog.Builder builder;
 
         bool ExerciseState;
+        bool isPoused;
 
         Thread thread1, thread2, thread3;
 
@@ -54,8 +59,14 @@ namespace AlfaVertion1
             tvTimer = (TextView)FindViewById(Resource.Id.tvTime);
             tvDistance = (TextView)FindViewById(Resource.Id.textViewDista);
             tvVelocity = (TextView)FindViewById(Resource.Id.textViewVelo);
-            tvTimePerKm = (TextView)FindViewById(Resource.Id.textViewpace);
+            //tvTimePerKm = (TextView)FindViewById(Resource.Id.textViewpace);
             tvIntervalTime = (TextView)FindViewById(Resource.Id.tvTimeForInterval);
+            icon = (ImageView)FindViewById(Resource.Id.ivIconImage);
+
+            bitPouse= BitmapFactory.DecodeResource(Resources, Resource.Drawable.redpouse);
+            bitPlay = BitmapFactory.DecodeResource(Resources, Resource.Drawable.blueplay2);
+
+            icon.SetImageBitmap(bitPouse);
 
             loclist = new List<Location>();
             time = 0;
@@ -86,7 +97,9 @@ namespace AlfaVertion1
 
             this.exerciseInUse.theEnd += EndExercise;
             this.ExerciseState = true;
-            
+            this.isPoused = false;
+
+            icon.Click += Icon_Click;
 
             ThreadStart threadStart1 = new ThreadStart(GPSThreadManager);
             thread1 = new Thread(threadStart1);
@@ -101,6 +114,19 @@ namespace AlfaVertion1
             thread3.Start();
 
 
+        }
+        private void Icon_Click(object sender, EventArgs e)
+        {
+            if (!isPoused)
+            {
+                isPoused = true;
+                icon.SetImageBitmap(bitPlay);
+            }
+            else
+            {
+                isPoused = false;
+                icon.SetImageBitmap(bitPouse);
+            }
         }
         public void EndExercise(object s,int n)
         {
@@ -125,7 +151,11 @@ namespace AlfaVertion1
         {
             while (ExerciseState)
             {
-                GetCurrentLocation();
+                if (!isPoused)
+                {
+                    GetCurrentLocation();
+                }
+                
                 Thread.Sleep(TimeSpan.FromSeconds(15));
             }
         }
@@ -133,7 +163,7 @@ namespace AlfaVertion1
         {
             try
             {
-                var request = new GeolocationRequest(GeolocationAccuracy.Low, TimeSpan.FromSeconds(30));
+                var request = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(30));
                 cts = new CancellationTokenSource();
                 Location location1 = await Geolocation.GetLocationAsync(request, cts.Token);
 
@@ -167,12 +197,15 @@ namespace AlfaVertion1
         }
         private void DistanceThreadManager()//summon calcDis and calcVelocity every 6 sec
         {
-            Thread.Sleep(TimeSpan.FromSeconds(30));
+            Thread.Sleep(TimeSpan.FromSeconds(15));
             while (ExerciseState)
             {
-                calcDis();
-                calcVelocity();
-                calcPace();
+                if (!isPoused)
+                {
+                    calcDis();
+                    calcVelocity();
+                    //calcPace();
+                }
                 Thread.Sleep(TimeSpan.FromSeconds(6));
             }
         }
@@ -215,7 +248,7 @@ namespace AlfaVertion1
             }
 
         }
-        public void calcPace()//calculate current pace
+        /* public void calcPace()//calculate current pace
         {
             int i2=0;
             double pacedis=0;
@@ -253,75 +286,83 @@ namespace AlfaVertion1
                 });
             }
 
-        }
+        }*/
         public void UpdateTime()//do timer
         {
             while (ExerciseState)
             {
-                int min = this.time / 60;
-                int sec = this.time - min * 60;
-                string s, m;
-                if (min < 10)
+                if (!isPoused)
                 {
-                    m = "0" + min;
-                }
-                else
-                {
-                    m = "" + min;
-                }
-                if (sec < 10)
-                {
-                    s = "0" + sec;
-                }
-                else
-                {
-                    s = "" + sec;
-                }
 
-                Interval_v0 curInterval = exerciseInUse.GetCurrentInterval();
-                string whatatoShow="eeeeeerrrr";
-                if (needsNewInterval)
-                {
-                    whatatoShow = SetNewInterval(curInterval);
-                }
-                else
-                {
-                    if (curInterval.GetType().Equals("time"))
+
+                    int min = this.time / 60;
+                    int sec = this.time - min * 60;
+                    string s, m;
+                    if (min < 10)
                     {
+                        m = "0" + min;
+                    }
+                    else
+                    {
+                        m = "" + min;
+                    }
+                    if (sec < 10)
+                    {
+                        s = "0" + sec;
+                    }
+                    else
+                    {
+                        s = "" + sec;
+                    }
 
-                        int numOfSec = (this.timeWhenIntervalStarted + this.intervalTime) - this.time;
-                        if (numOfSec > 0)
+                    Interval_v0 curInterval = exerciseInUse.GetCurrentInterval();
+                    string whatatoShow = "eeeeeerrrr";
+                    if (needsNewInterval)
+                    {
+                        whatatoShow = SetNewInterval(curInterval);
+                    }
+                    else
+                    {
+                        if (curInterval.GetType().Equals("time"))
                         {
-                            whatatoShow = TimeSpan.FromSeconds(numOfSec).ToString();
+
+                            int numOfSec = (this.timeWhenIntervalStarted + this.intervalTime) - this.time;
+                            if (numOfSec > 0)
+                            {
+                                whatatoShow = TimeSpan.FromSeconds(numOfSec).ToString();
+                            }
+                            else
+                            {
+                                //Toast.MakeText(this, "time ended", ToastLength.Short).Show();
+                                this.exerciseInUse.Next();
+                                needsNewInterval = true;
+                                //whatatoShow = SetNewInterval(curInterval);
+                            }
                         }
-                        else
+                        else if (curInterval.GetType().Equals("dis"))
                         {
-                            this.exerciseInUse.Next();
-                            whatatoShow = SetNewInterval(curInterval);
+                            int disFormIntervalStart = CalcSpecificDist(this.indexOfLocationInListWhenIntervalStarted);
+                            if (this.intervalDis - disFormIntervalStart > 0)
+                            {
+                                whatatoShow = "" + (this.intervalDis - disFormIntervalStart);
+                            }
+                            else
+                            {
+                                //Toast.MakeText(this, "dis ended", ToastLength.Short).Show();
+                                this.exerciseInUse.Next();
+                                needsNewInterval = true;
+                                //whatatoShow = SetNewInterval(curInterval);
+                            }
                         }
                     }
-                    else if (curInterval.GetType().Equals("dis"))
+                    this.time++;
+
+                    RunOnUiThread(() =>
                     {
-                        int disFormIntervalStart = CalcSpecificDist(this.indexOfLocationInListWhenIntervalStarted);
-                        if (this.intervalDis - disFormIntervalStart > 0)
-                        {
-                            whatatoShow = "" + (this.intervalDis - disFormIntervalStart);
-                        }
-                        else
-                        {
-                            this.exerciseInUse.Next();
-                            whatatoShow = SetNewInterval(curInterval);
-                        }
-                    }
+                        tvTimer.Text = m + ":" + s;
+                        this.tvIntervalTime.Text = whatatoShow;
+                    });
                 }
-                this.time++;
-
-                RunOnUiThread(() =>
-                {
-                    tvTimer.Text = m + ":" + s;
-                    this.tvIntervalTime.Text = whatatoShow;
-                });
-
                 Thread.Sleep(1000);
             }
         }

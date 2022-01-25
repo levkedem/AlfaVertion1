@@ -37,13 +37,13 @@ namespace AlfaVertion1
             adapter1 = new ExerciseAdapter1(this, MainActivity.allExerci);
             listView.Adapter = adapter1;
 
-            this.listView.ItemClick += ListView_ItemClick;
+            //this.listView.ItemClick += ListView_ItemClick;
             this.listView.ItemLongClick += ListView_ItemLongClick;
 
             // Create your application here
         }
 
-        private void ListView_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
+        /*private void ListView_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
             if (e.Position != null)
             {
@@ -51,7 +51,7 @@ namespace AlfaVertion1
             }
             Intent i1 = new Intent(this, typeof(RunningExOnGoing));
             StartActivity(i1);
-        }
+        }*/
 
         private void ListView_ItemLongClick(object sender, AdapterView.ItemLongClickEventArgs e)
         {

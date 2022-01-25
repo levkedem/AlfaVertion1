@@ -47,7 +47,7 @@
             
             <ListView
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="180dp"
                 android:id="@+id/listViewInterval1"/>
             <Button
                 android:layout_width="wrap_content"
@@ -82,7 +82,7 @@
             
             <ListView
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="180dp"
                 android:id="@+id/listViewInterval2"/>
             <Button
                 android:layout_width="wrap_content"
@@ -117,7 +117,7 @@
                 />
             <ListView
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="180dp"
                 android:id="@+id/listViewInterval3"/>
             <Button
                 android:layout_width="wrap_content"

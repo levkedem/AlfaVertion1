@@ -11,6 +11,9 @@ using System.Collections.Generic;
 using Android.Content;
 using Android.Views;
 using SQLite;
+using Xamarin.Android;
+//using Android.Gms;
+//using Android.Gms.Maps;
 
 namespace AlfaVertion1
 {
@@ -22,7 +25,7 @@ namespace AlfaVertion1
         public static bool ShowEndingDialog;
         Dialog d;
 
-        public static List<Exercise> allExerci { get; set; }
+        public static List<Exercise> allExerci;
         string path;
 
         public static Exercise theOneInUse { get; set; }
@@ -37,15 +40,16 @@ namespace AlfaVertion1
             path = HelperClass.Path();
             var db = new SQLiteConnection(path);
             db.CreateTable<Exercise>();
+
             //db.DeleteAll<Exercise>();
-            MainActivity.allExerci = HelperClass.getAll();
+            MainActivity.allExerci = getAll2();
 
             this.btMakeRunning = (Button)FindViewById(Resource.Id.btrunning);
-            this.btMakeExercise = (Button)FindViewById(Resource.Id.btexe);
+            //this.btMakeExercise = (Button)FindViewById(Resource.Id.btexe);
             this.btRecentWorkouts = (Button)FindViewById(Resource.Id.btoldStaff);
 
             btMakeRunning.Click += BtMakeRunning_Click; 
-            btMakeExercise.Click += BtMakeExercise_Click;
+            //btMakeExercise.Click += BtMakeExercise_Click;
             btRecentWorkouts.Click += BtRecentWorkouts_Click;
 
             Intent intent = new Intent(this, typeof(MyService));
@@ -55,6 +59,25 @@ namespace AlfaVertion1
 
             theOneInUse = null;
 
+            //var mapFragment = (MapFragment)FragmentManager.FindFragmentById(Resource.Id.map);
+            //mapFragment.GetMapAsync(this);
+
+        }
+        public static List<Exercise> getAll2()
+        {
+            allExerci = new List<Exercise>();
+            var db = new SQLiteConnection(HelperClass.Path());
+            string query = string.Format("SELECT * FROM Archive");
+            var Exercises1 = db.Query<Exercise>(query);
+            Console.WriteLine(query);
+            if (Exercises1.Count > 0)
+            {
+                foreach (var item in Exercises1)
+                {
+                    allExerci.Add(item);
+                }
+            }
+            return allExerci;
         }
         public override bool OnCreateOptionsMenu(IMenu menu)
         {

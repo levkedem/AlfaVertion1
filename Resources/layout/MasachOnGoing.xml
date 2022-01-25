@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="80dp"
         android:background="#B0C4DE"
-        android:text="20:34"
+        android:text="00:00"
         android:textSize="50sp"
         android:fontFamily="monospace"
         android:id="@+id/tvTime"/>
@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="80dp"
         android:background="#B0C4DE"
-        android:text="9.7"
+        android:text="0.0"
         android:textSize="50sp"
         android:fontFamily="monospace"
         android:id="@+id/textViewDista"
@@ -35,7 +35,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:text="km"
+        android:text="m"
         android:textSize="20sp"
         android:fontFamily="monospace"/>
     <LinearLayout
@@ -48,7 +48,7 @@
             android:orientation="vertical"
             android:layout_weight="1">
 
-        <TextView
+        <!--<TextView
             android:layout_marginTop="7sp"
             android:layout_marginRight="30dp"
             android:layout_width="90sp"
@@ -59,7 +59,7 @@
             android:textSize="35sp"
             android:id="@+id/textViewpace"
                 
-            android:fontFamily="monospace"/>
+            android:fontFamily="monospace"/> 
         
         <TextView
             android:layout_width="75sp"
@@ -68,7 +68,7 @@
             android:textSize="20sp"
             android:fontFamily="monospace"
             android:layout_marginLeft="7.5sp"
-                />
+                /> /-->
 
             </LinearLayout>
         <LinearLayout
@@ -84,7 +84,7 @@
             android:layout_width="90sp"
             android:layout_height="60dp"
             android:background="#B0C4DE"
-            android:text="9.7"
+            android:text="0"
             android:textSize="35sp"
             android:gravity="center_horizontal"
             android:fontFamily="monospace"
@@ -96,7 +96,7 @@
             android:text="km/h"
             android:textSize="20sp"
             android:fontFamily="monospace"
-            android:layout_marginLeft="7.5dp"
+            android:layout_marginLeft="15.5dp"
                 />
 
             </LinearLayout>
@@ -107,7 +107,7 @@
         android:layout_width="wrap_content"
         android:layout_height="80dp"
         android:background="#B0C4DE"
-        android:text="20:34"
+        android:text="00:00"
         android:textSize="50sp"
         android:fontFamily="monospace"
         android:id="@+id/tvTimeForInterval"/>
@@ -126,14 +126,9 @@
         <ImageView
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/redpouse"
-            android:id="@+id/ivPouse"/>
-        <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:background="@drawable/blueplay2"
-            android:id="@+id/ivPlay"/>
+            android:layout_marginEnd="10dp"            
+            android:id="@+id/ivIconImage"/>
+        
 
         </LinearLayout>
 

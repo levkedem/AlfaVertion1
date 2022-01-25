@@ -48,7 +48,7 @@ namespace AlfaVertion1
         public void StartEx()
         {
             this.currentPart = 0;
-            for (int i = 0; i < parts.Count-1; i++)
+            for (int i = 0; i < this.parts.Count-1; i++)
             {
                 parts[i].StartPart();
             }

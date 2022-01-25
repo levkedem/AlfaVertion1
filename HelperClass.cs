@@ -48,7 +48,8 @@ namespace AlfaVertion1
             var db = new SQLiteConnection(Path());
             string query = string.Format("SELECT * FROM Archive");
             var Exercises1 = db.Query<Exercise>(query);
-            if (Exercises1.Count() > 0)
+            Console.WriteLine(query);
+            if (Exercises1.Count > 0)
             {
                 foreach (var item in Exercises1)
                 {
