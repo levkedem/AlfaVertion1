@@ -13,13 +13,25 @@ using Android.Widget;
 
 namespace AlfaVertion1
 {
-    public abstract class Interval_v0
+    public  class Interval_v0
     {
         
 
-        public abstract int GetAtrtribute();
-        public abstract string GetSpeed();
-        public abstract string GetType();
-        public abstract Bitmap GetBitmap(); 
+        public virtual int GetAtrtribute()
+        {
+            return 0;
+        }
+        public virtual string GetSpeed()
+        {
+            return "";
+        }
+        public virtual string GetType()
+        {
+            return "";
+        }
+        public virtual Bitmap GetBitmap()
+        {
+            return null;
+        }
     }
 }

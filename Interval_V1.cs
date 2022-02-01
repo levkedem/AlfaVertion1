@@ -15,9 +15,9 @@ namespace AlfaVertion1
 {
     class Interval_V1:Interval_v0
     {
-        TimeSpan time;
-        string speed, type;
-        Bitmap photo;
+        public TimeSpan time;
+        public string speed, type;
+        public Bitmap photo;
         public Interval_V1(TimeSpan timeSpan, string t, Bitmap photo)
         {
             this.time = timeSpan;

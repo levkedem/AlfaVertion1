@@ -9,14 +9,13 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using SQLite;
 
 namespace AlfaVertion1
 {
-    [Table("Archive")]
+    
     public class Exercise
     {
-        [PrimaryKey, AutoIncrement, Column("_id")]
+        
         public int id { get; set; }
 
         public List<ExPart> parts;

@@ -14,8 +14,10 @@ namespace AlfaVertion1
 {
     public class ExPart
     {
-        List<Interval_v0> intervals;
-        int repeats, currentRep, currentIntrval;
+        public List<Interval_v0> intervals;
+        public int repeats;
+        public int currentRep;
+        public int currentIntrval;
         public ExPart(int rep, List<Interval_v0> inList)
         {
             this.repeats = rep;

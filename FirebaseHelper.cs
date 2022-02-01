@@ -18,12 +18,12 @@ namespace AlfaVertion1
     public class FirebaseHelper
     {
         public static FirebaseClient client= new FirebaseClient("https://cohesive-geode-337809-default-rtdb.firebaseio.com/");
-        private static string database = "locationsDb";
+        private static string database = "locationsDb";       
 
         public static async Task<List<Exercise>> GetAll()
         {
-            return (await client.
-                Child(database).OnceAsync<Exercise>()).Select(item => new Exercise
+            var respone = await client.Child(database).OnceAsync<Exercise>();
+            return (respone).Select(item => new Exercise
                 {
                     id = item.Object.id,
                     parts = item.Object.parts,

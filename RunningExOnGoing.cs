@@ -188,7 +188,7 @@ namespace AlfaVertion1
             }
             catch (PermissionException pEx)
             {
-                // Handle permission exception
+                Permissions.RequestAsync<Permissions.LocationWhenInUse>();
             }
             catch (Exception ex)
             {

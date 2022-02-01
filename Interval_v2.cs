@@ -15,9 +15,9 @@ namespace AlfaVertion1
 {
     class Interval_v2 : Interval_v0
     {
-        int distanceM;
-        string speed, type;
-        Bitmap photo;
+        public int distanceM;
+        public string speed, type;
+        public Bitmap photo;
 
         public Interval_v2(int dis, string t, Bitmap photo)
         {

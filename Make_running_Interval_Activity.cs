@@ -144,6 +144,9 @@ namespace AlfaVertion1
             if (witchDialog == 2)
             {
                 this.typeCounter.Text = "" + etDis.Text + " km";
+                if (etDis.Text == null)
+                    etDis.Text = "3";
+
                 dis = Convert.ToDouble(etDis.Text);
                 time = TimeSpan.Zero;
                 d.Dismiss();

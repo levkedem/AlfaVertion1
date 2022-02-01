@@ -10,7 +10,6 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using SQLite;
 
 namespace AlfaVertion1
 {
@@ -203,18 +202,12 @@ namespace AlfaVertion1
             }
             
             Construct_running_Activity.exercise = new Exercise(parts, this.etWorkOutName.Text);
-            UpdateDBNewExercise();
-
-        }
-        public void UpdateDBNewExercise()
-        {
-            var db = new SQLiteConnection(HelperClass.Path());
-
-            db.Insert(Construct_running_Activity.exercise);
+            FirebaseHelper.Add(Construct_running_Activity.exercise);
             MainActivity.allExerci.Add(Construct_running_Activity.exercise);
+            //UpdateDBNewExercise();
 
         }
-        
+               
 
         private void MakeInterval3_Click(object sender, EventArgs e)//make interval 3
         {

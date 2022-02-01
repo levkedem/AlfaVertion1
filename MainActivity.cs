@@ -10,7 +10,6 @@ using System;
 using System.Collections.Generic;
 using Android.Content;
 using Android.Views;
-using SQLite;
 using Xamarin.Android;
 //using Android.Gms;
 //using Android.Gms.Maps;
@@ -30,19 +29,22 @@ namespace AlfaVertion1
 
         public static Exercise theOneInUse { get; set; }
 
-        protected override void OnCreate(Bundle savedInstanceState)
+        protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.activity_main);
 
+            /*
             path = HelperClass.Path();
             var db = new SQLiteConnection(path);
             db.CreateTable<Exercise>();
+            db.DeleteAll<Exercise>();
 
             //db.DeleteAll<Exercise>();
-            MainActivity.allExerci = getAll2();
+            */
+            MainActivity.allExerci = await FirebaseHelper.GetAll();
 
             this.btMakeRunning = (Button)FindViewById(Resource.Id.btrunning);
             //this.btMakeExercise = (Button)FindViewById(Resource.Id.btexe);
@@ -63,22 +65,7 @@ namespace AlfaVertion1
             //mapFragment.GetMapAsync(this);
 
         }
-        public static List<Exercise> getAll2()
-        {
-            allExerci = new List<Exercise>();
-            var db = new SQLiteConnection(HelperClass.Path());
-            string query = string.Format("SELECT * FROM Archive");
-            var Exercises1 = db.Query<Exercise>(query);
-            Console.WriteLine(query);
-            if (Exercises1.Count > 0)
-            {
-                foreach (var item in Exercises1)
-                {
-                    allExerci.Add(item);
-                }
-            }
-            return allExerci;
-        }
+        
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
             MenuInflater.Inflate(Resource.Menu.menu1, menu);
