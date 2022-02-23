@@ -5,6 +5,7 @@ using System.Text;
 
 using Android.App;
 using Android.Content;
+using Android.Content.PM;
 using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
@@ -13,7 +14,7 @@ using Android.Widget;
 
 namespace AlfaVertion1
 {
-    [Activity(Label = "Make_running_Interval_Activity")]
+    [Activity(Label = "Make_running_Interval_Activity", ScreenOrientation = ScreenOrientation.Portrait)]
     public class Make_running_Interval_Activity : Activity
     {
 

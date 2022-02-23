@@ -27,6 +27,7 @@ namespace AlfaVertion1
         }
         public virtual string GetType()
         {
+            //object.GetType();
             return "";
         }
         public virtual Bitmap GetBitmap()

@@ -31,6 +31,7 @@ namespace AlfaVertion1
                     name=item.Object.name,
                     timeForThisEx= item.Object.timeForThisEx,
                     distanceForThisExKM = item.Object.distanceForThisExKM,
+
                 }).ToList();
         }
 

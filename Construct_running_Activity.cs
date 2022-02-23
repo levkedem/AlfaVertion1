@@ -5,6 +5,7 @@ using System.Text;
 
 using Android.App;
 using Android.Content;
+using Android.Content.PM;
 using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
@@ -13,7 +14,7 @@ using Android.Widget;
 
 namespace AlfaVertion1
 {
-    [Activity(Label = "Construct_running_Activity")]
+    [Activity(Label = "Construct_running_Activity", ScreenOrientation = ScreenOrientation.Portrait)]
     public class Construct_running_Activity : Activity
     {
         public static List<Interval_v0> interval_List1 { get; set; }

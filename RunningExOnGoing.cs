@@ -6,7 +6,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
+using Android.Content.PM;
 using Android.Graphics;
+using Android.Hardware;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -16,8 +18,8 @@ using Xamarin.Essentials;
 
 namespace AlfaVertion1
 {
-    [Activity(Label = "RunningExOnGoing")]
-    public class RunningExOnGoing : Activity
+    [Activity(Label = "RunningExOnGoing", ScreenOrientation = ScreenOrientation.Portrait)]
+    public class RunningExOnGoing : Activity,  ISensorEventListener
     {
         TextView tvTimer, tvDistance, tvVelocity, tvTimePerKm, tvIntervalTime;
         ImageView icon;
@@ -40,10 +42,16 @@ namespace AlfaVertion1
         BroadcastBattery broadCastBattery;
         AlertDialog.Builder builder;
 
+
         bool ExerciseState;
         bool isPoused;
 
         Thread thread1, thread2, thread3;
+
+        SensorManager sensorManager;
+        Sensor temprSensor;
+        bool checkLight;
+        AlertDialog.Builder builder2;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -83,6 +91,7 @@ namespace AlfaVertion1
                 int num = MainActivity.allExerci.Count;
                 this.exerciseInUse = MainActivity.allExerci[num-1];
             }
+            //this.exerciseInUse.
             this.exerciseInUse.StartEx();
                                  
 
@@ -113,6 +122,11 @@ namespace AlfaVertion1
             thread3 = new Thread(threadStart3);
             thread3.Start();
 
+            sensorManager = (SensorManager)GetSystemService(Context.SensorService);
+
+            temprSensor = sensorManager.GetDefaultSensor(SensorType.Light);
+            checkLight = false;
+            
 
         }
         private void Icon_Click(object sender, EventArgs e)
@@ -389,6 +403,7 @@ namespace AlfaVertion1
         public string SetNewInterval(Interval_v0 curInterval)
         {
             string str="";
+            //Vibration.Vibrate(TimeSpan.FromMilliseconds(700));
             if (curInterval.GetType().Equals("time"))
             {
                 this.intervalTime = curInterval.GetAtrtribute();
@@ -414,15 +429,57 @@ namespace AlfaVertion1
 
         }
 
+        public void OnAccuracyChanged(Sensor sensor, [GeneratedEnum] SensorStatus accuracy)
+        {
+
+        }
+
+        public void OnSensorChanged(SensorEvent e)
+        {
+            if (!checkLight)
+            {
+                //Toast.MakeText(this, "" + e.Values[0], ToastLength.Short).Show();
+                if (e.Values[0]<10)
+                {
+                    isPoused = true;
+
+                    builder = new AlertDialog.Builder(this);
+                    builder.SetTitle("It is dark outside");
+                    builder.SetMessage("make sure you are visible");
+                    builder.SetCancelable(false);
+                    builder.SetPositiveButton("back to menu", OkAction2);
+                    builder.SetNegativeButton("keep running", NoAction);
+                    AlertDialog d3 = builder.Create();
+                    d3.Show();
+                    checkLight = true;
+                }
+            }
+            
+
+        }
+        private void OkAction2(object sender, DialogClickEventArgs e)
+        {
+            Intent i1 = new Intent(this, typeof(MainActivity));
+            StartActivity(i1);
+        }
+        private void NoAction(object sender, DialogClickEventArgs e)
+        {
+            isPoused = false;
+        }
         protected override void OnResume()
         {
             base.OnResume();
             RegisterReceiver(broadCastBattery, new IntentFilter(Intent.ActionBatteryChanged));
+            if (!checkLight)
+            {
+                sensorManager.RegisterListener(this, sensorManager.GetDefaultSensor(SensorType.Light), SensorDelay.Ui);
+            }
         }
         protected override void OnPause()
         {
             base.OnPause();
             UnregisterReceiver(broadCastBattery);
+            sensorManager.UnregisterListener(this);
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {

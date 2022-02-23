@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="BroadcastBattery.cs" />
     <Compile Include="Construct_running_Activity.cs" />
+    <Compile Include="DbExercise.cs" />
     <Compile Include="ExerciseAdapter1.cs" />
     <Compile Include="Exercise_End_Activity.cs" />
     <Compile Include="Exercise.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="Interval_v0.cs" />
     <Compile Include="Interval_V1.cs" />
     <Compile Include="Interval_v2.cs" />
+    <Compile Include="Interval_VDB.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Make_running_Interval_Activity.cs" />
     <Compile Include="MusicPlayerBroadcastReciever .cs" />

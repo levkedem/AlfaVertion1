@@ -25,7 +25,6 @@ namespace AlfaVertion1
 
         public double distanceForThisExKM { get; set; }
 
-        int count;
         int currentPart;
         public EventHandler<int> theEnd;
 
@@ -33,6 +32,7 @@ namespace AlfaVertion1
         { 
         
         }
+        
         public Exercise(List<ExPart> parts,string n)
         {
             this.parts = parts;

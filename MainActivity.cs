@@ -11,12 +11,13 @@ using System.Collections.Generic;
 using Android.Content;
 using Android.Views;
 using Xamarin.Android;
+using Android.Content.PM;
 //using Android.Gms;
 //using Android.Gms.Maps;
 
 namespace AlfaVertion1
 {
-    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
+    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true, ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : AppCompatActivity
     {
         Button btMakeRunning, btMakeExercise, btRecentWorkouts;
