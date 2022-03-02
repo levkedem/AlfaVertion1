@@ -20,11 +20,36 @@ namespace AlfaVertion1
 
         public Interval_VDB(Interval_v0 interval)
         {
-            if (interval.GetType()=="time")
+            if (interval.GetType().Equals("time"))
             {
-
+                this.time = TimeSpan.FromSeconds(interval.GetAtrtribute());
+                this.speed = interval.GetSpeed();
+                this.type = interval.GetType();
+                this.distanceM = 0;
+            }
+            else if (interval.GetType().Equals("dis"))
+            {
+                this.distanceM = interval.GetAtrtribute();
+                this.speed = interval.GetSpeed();
+                this.type = interval.GetType();
+                this.time = TimeSpan.FromSeconds(0);
             }
         }
+        /*
+        public Interval_v0 GetConvertedInterval()
+        {
+            if (this.type.Equals("time"))
+            {
+                Interval_V1 v1Interval=new Interval_V1(this.time,this.type)
+            }
+            else if (interval.GetType().Equals("dis"))
+            {
+                this.distanceM = interval.GetAtrtribute();
+                this.speed = interval.GetSpeed();
+                this.type = interval.GetType();
+                this.time = TimeSpan.FromSeconds(0);
+            }
+        }*/
         
 
     }

@@ -5,6 +5,7 @@ using System.Text;
 
 using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -55,7 +56,21 @@ namespace AlfaVertion1
             Interval_v0 temp = intervals[position];
             if (temp != null)
             {
-                imageView1.SetImageBitmap(temp.GetBitmap());
+
+                Bitmap bitmap = null;
+                if (temp.GetSpeed().Equals("fast"))
+                {
+                    bitmap = BitmapFactory.DecodeResource(this.context.Resources, Resource.Drawable.fast);
+                }
+                else if (temp.GetSpeed().Equals("med"))
+                {
+                    bitmap = BitmapFactory.DecodeResource(this.context.Resources, Resource.Drawable.steady);
+                }
+                else if (temp.GetSpeed().Equals("slow"))
+                {
+                    bitmap = BitmapFactory.DecodeResource(this.context.Resources, Resource.Drawable.slow);
+                }
+                imageView1.SetImageBitmap(bitmap);
                 tvPace1.Text = temp.GetSpeed();
                 string s = ""+temp.GetAtrtribute() % 60;
                 if (temp.GetAtrtribute() % 60<10)
