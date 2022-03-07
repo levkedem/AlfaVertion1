@@ -162,7 +162,7 @@ namespace AlfaVertion1
             if (this.cbWarm.Checked)
             {
                 Bitmap warmBit= BitmapFactory.DecodeResource(Resources, Resource.Drawable.slow);
-                Interval_V1 tempInterval = new Interval_V1(TimeSpan.FromMinutes(5), "warm up", warmBit);
+                Interval_V1 tempInterval = new Interval_V1(TimeSpan.FromMinutes(5), "warm up");
                 List<Interval_v0> tempList = new List<Interval_v0>();
                 tempList.Add(tempInterval);
 
@@ -194,8 +194,8 @@ namespace AlfaVertion1
             }
             if (this.cbCool.Checked)
             {
-                Bitmap coolBit = BitmapFactory.DecodeResource(Resources, Resource.Drawable.slow);
-                Interval_V1 tempInterval2 = new Interval_V1(TimeSpan.FromMinutes(5), "warm up", coolBit);
+                
+                Interval_V1 tempInterval2 = new Interval_V1(TimeSpan.FromMinutes(5), "warm up");
                 List<Interval_v0> tempList2 = new List<Interval_v0>();
                 tempList2.Add(tempInterval2);
 

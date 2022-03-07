@@ -12,7 +12,33 @@ using Android.Widget;
 
 namespace AlfaVertion1
 {
-    class ExPartDB
+    public class ExPartDB
     {
+        public List<Interval_VDB> intervals;
+        public int repeats;
+        public int currentRep;
+        public int currentIntrval;
+
+        public ExPartDB(ExPart part)
+        {
+            this.repeats = part.repeats;
+            this.currentRep = 1;
+            currentIntrval = 0;
+            for (int i = 0; i < part.intervals.Count; i++)
+            {
+                this.intervals[i] =new Interval_VDB(part.intervals[i]);
+            }
+        }
+        public ExPart GetNprmalPart()
+        {
+            List<Interval_v0> intervalsForPart = new List<Interval_v0>();
+            for (int i = 0; i < intervals.Count; i++)
+            {
+                intervalsForPart.Add(intervals[i].GetConvertedInterval());
+            }
+            ExPart p = new ExPart(this.repeats,intervalsForPart);
+            return p;
+        }
+
     }
 }

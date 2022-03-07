@@ -17,18 +17,13 @@ namespace AlfaVertion1
     {
         public TimeSpan time;
         public string speed, type;
-        public Bitmap photo;
-        public Interval_V1(TimeSpan timeSpan, string t, Bitmap photo)
+        public Interval_V1(TimeSpan timeSpan, string t)
         {
             this.time = timeSpan;
             this.speed = t;
             this.type = "time";
-            this.photo = photo;
         }
-        public override Bitmap GetBitmap()
-        {
-            return this.photo;
-        }
+        
         public override int GetAtrtribute()
         {
             return this.time.Seconds + this.time.Minutes * 60;

@@ -68,6 +68,7 @@
     <Compile Include="Exercise_End_Activity.cs" />
     <Compile Include="Exercise.cs" />
     <Compile Include="ExPart.cs" />
+    <Compile Include="ExPartDB.cs" />
     <Compile Include="FirebaseHelper.cs" />
     <Compile Include="Interval0_Adapter.cs" />
     <Compile Include="Interval_v0.cs" />

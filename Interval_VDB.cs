@@ -35,21 +35,21 @@ namespace AlfaVertion1
                 this.time = TimeSpan.FromSeconds(0);
             }
         }
-        /*
+        
         public Interval_v0 GetConvertedInterval()
         {
-            if (this.type.Equals("time"))
+            if (this.type.Equals("time")|| this.type.Equals("warm up")||this.type.Equals("cool down"))
             {
-                Interval_V1 v1Interval=new Interval_V1(this.time,this.type)
+                Interval_V1 v1Interval = new Interval_V1(this.time, this.type);
+                return (Interval_v0)v1Interval;
             }
-            else if (interval.GetType().Equals("dis"))
+            else if (this.GetType().Equals("dis"))
             {
-                this.distanceM = interval.GetAtrtribute();
-                this.speed = interval.GetSpeed();
-                this.type = interval.GetType();
-                this.time = TimeSpan.FromSeconds(0);
+                Interval_v2 v2Interval = new Interval_v2(this.distanceM, this.speed);
+                return (Interval_v0)v2Interval;
             }
-        }*/
+            return null;
+        }
         
 
     }

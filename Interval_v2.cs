@@ -17,24 +17,18 @@ namespace AlfaVertion1
     {
         public int distanceM;
         public string speed, type;
-        public Bitmap photo;
+        
 
-        public Interval_v2(int dis, string t, Bitmap photo)
+        public Interval_v2(int dis, string t)
         {
             this.distanceM = dis;
             this.speed = t;
             this.type = "dis";
-            this.photo = photo;
         }
         public override int GetAtrtribute()
         {
             return this.distanceM;
-        }
-
-        public override Bitmap GetBitmap()
-        {
-            return this.photo;
-        }
+        }        
 
         public override string GetSpeed()
         {

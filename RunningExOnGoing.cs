@@ -202,7 +202,7 @@ namespace AlfaVertion1
             }
             catch (PermissionException pEx)
             {
-                Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+                await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
             }
             catch (Exception ex)
             {

@@ -83,12 +83,12 @@ namespace AlfaVertion1
 
             if (this.dis!=0)
             {
-                Interval_v2 interval = new Interval_v2((int)(this.dis * 1000), speed,bitmap);
+                Interval_v2 interval = new Interval_v2((int)(this.dis * 1000), speed);
                 this.interval0 = interval;               
             }
             else if (this.time!=TimeSpan.Zero)
             {
-                Interval_V1 interval = new Interval_V1(time, speed,bitmap);
+                Interval_V1 interval = new Interval_V1(time, speed);
                 this.interval0 = interval;
             }
             if (this.interval0!=null)

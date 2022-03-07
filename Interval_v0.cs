@@ -30,9 +30,6 @@ namespace AlfaVertion1
             //object.GetType();
             return "";
         }
-        public virtual Bitmap GetBitmap()
-        {
-            return null;
-        }
+        
     }
 }

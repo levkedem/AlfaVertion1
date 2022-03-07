@@ -38,12 +38,27 @@ namespace AlfaVertion1
             this.parts = parts;
             this.date = DateTime.Now;
             this.name = n;
+            this.timeForThisEx = 0;
+            this.distanceForThisExKM = 0;
             if (n=="")
             {
                 this.name = "Exercise";
             }
             this.currentPart = 0;           
         }
+        public Exercise(List<ExPart> parts, string n, int t, double km)
+        {
+            this.parts = parts;
+            this.date = DateTime.Now;
+            this.name = n;
+            this.timeForThisEx = t;
+            this.distanceForThisExKM = km;
+            if (n == "")
+            {
+                this.name = "Exercise";
+            }
+        }
+
         public void StartEx()
         {
             this.currentPart = 0;

@@ -70,6 +70,10 @@ namespace AlfaVertion1
                 {
                     bitmap = BitmapFactory.DecodeResource(this.context.Resources, Resource.Drawable.slow);
                 }
+                else if (temp.GetSpeed().Equals("warm up"))
+                {
+                    bitmap = BitmapFactory.DecodeResource(this.context.Resources, Resource.Drawable.slow);
+                }
                 imageView1.SetImageBitmap(bitmap);
                 tvPace1.Text = temp.GetSpeed();
                 string s = ""+temp.GetAtrtribute() % 60;
