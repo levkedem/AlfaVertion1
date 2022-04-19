@@ -17,7 +17,7 @@ namespace AlfaVertion1
     {
         public TimeSpan time;
         public string speed, type;
-        public Interval_V1(TimeSpan timeSpan, string t)
+        public Interval_V1(TimeSpan timeSpan, string t):base((timeSpan.Seconds+timeSpan.Minutes*60),t,"time")
         {
             this.time = timeSpan;
             this.speed = t;
@@ -32,7 +32,7 @@ namespace AlfaVertion1
         {
             return this.speed;
         }
-        public override string GetType()
+        public override string GetType1()
         {
             return this.type;
         }

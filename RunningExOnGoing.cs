@@ -337,7 +337,7 @@ namespace AlfaVertion1
                     }
                     else
                     {
-                        if (curInterval.GetType().Equals("time"))
+                        if (curInterval.GetType1().Equals("time"))
                         {
 
                             int numOfSec = (this.timeWhenIntervalStarted + this.intervalTime) - this.time;
@@ -353,7 +353,7 @@ namespace AlfaVertion1
                                 //whatatoShow = SetNewInterval(curInterval);
                             }
                         }
-                        else if (curInterval.GetType().Equals("dis"))
+                        else if (curInterval.GetType1().Equals("dis"))
                         {
                             int disFormIntervalStart = CalcSpecificDist(this.indexOfLocationInListWhenIntervalStarted);
                             if (this.intervalDis - disFormIntervalStart > 0)
@@ -404,7 +404,7 @@ namespace AlfaVertion1
         {
             string str="";
             //Vibration.Vibrate(TimeSpan.FromMilliseconds(700));
-            if (curInterval.GetType().Equals("time"))
+            if (curInterval.GetType1().Equals("time"))
             {
                 this.intervalTime = curInterval.GetAtrtribute();
                 this.intervalDis = 0;
@@ -412,7 +412,7 @@ namespace AlfaVertion1
                 str = TimeSpan.FromSeconds(intervalTime).ToString();
                 needsNewInterval = false;
             }
-            else if (curInterval.GetType().Equals("dis"))
+            else if (curInterval.GetType1().Equals("dis"))
             {
                 this.intervalTime = 0;
                 this.intervalDis = curInterval.GetAtrtribute();
@@ -425,10 +425,32 @@ namespace AlfaVertion1
                 str = "" + this.intervalDis;
                 needsNewInterval = false;
             }
+
+            string stToSay = MakeTextToInterval(curInterval);
+
+            SpeakNowDefaultSettings(stToSay);
+
             return str;
 
         }
-
+        public string MakeTextToInterval(Interval_v0 interval)//מכין את המחרוזת שאמורה להאמר
+        {
+            string result = "new interval,";
+            if (interval.GetType1().Equals("time"))
+            {
+                result = result + "run for " + interval.GetAtrtribute() / 60 + " minutes and " + interval.GetAtrtribute() % 60 + " seconds," + interval.GetSpeed();
+            }
+            else if (interval.GetType1().Equals("dis"))
+            {
+                result = result + "run " + interval.GetAtrtribute() + " meters, " + interval.GetSpeed();
+            }
+            return result;
+        }
+        public async Task SpeakNowDefaultSettings(string s)
+        {
+            await TextToSpeech.SpeakAsync(s);
+           
+        }
         public void OnAccuracyChanged(Sensor sensor, [GeneratedEnum] SensorStatus accuracy)
         {
 

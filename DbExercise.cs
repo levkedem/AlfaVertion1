@@ -14,13 +14,28 @@ namespace AlfaVertion1
 {
     public class DbExercise
     {
-        string  user;
-        public List<ExPartDB> dBParts;
-        public DateTime date;
+        //public string  user { get; set; }
+
+        public List<ExPartDB> dBParts { get; set; }
+        public DateTime date { get; set; }
         public string name { get; set; }
         public int timeForThisEx { get; set; }
 
         public double distanceForThisExKM { get; set; }
+
+        public DbExercise()
+        {
+
+        }
+        public DbExercise(string u, List<ExPartDB> p, DateTime d, string name, int time, double dis)
+        {
+            //this.user = u;
+            this.dBParts = p;
+            this.date = d;
+            this.name = name;
+            this.timeForThisEx = time;
+            this.distanceForThisExKM = dis;
+        }
         public DbExercise(Exercise ex)
         {
             this.date = ex.date;
@@ -35,10 +50,7 @@ namespace AlfaVertion1
             }
 
         }
-        public DbExercise()
-        { 
         
-        }
         public Exercise ConvertToNormal()
         {
             List<ExPart> partsForNew = new List<ExPart>();

@@ -81,7 +81,7 @@ namespace AlfaVertion1
                 {
                     s = "0" + temp.GetAtrtribute() % 60;
                 }
-                if (temp.GetType().Equals("time"))
+                if (temp.GetType1().Equals("time"))
                 {
                     
                     tvLength1.Text = "" + temp.GetAtrtribute() / 60 + ":" + s;

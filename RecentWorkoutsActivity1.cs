@@ -22,7 +22,7 @@ namespace AlfaVertion1
         ExerciseAdapter1 adapter1;
 
 
-        protected override async void OnCreate(Bundle savedInstanceState)
+        protected override  void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.Recent_workouts_layout);
@@ -55,7 +55,7 @@ namespace AlfaVertion1
         {
             if (e.Position != null)
             {
-                FirebaseHelper.Delete(MainActivity.allExerci[e.Position].name);
+                FirebaseHelper.Delete(MainActivity.allExerci[e.Position].name);//add awaut
 
                 MainActivity.allExerci.RemoveAt(e.Position);
                 adapter1.NotifyDataSetChanged();

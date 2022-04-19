@@ -203,7 +203,7 @@ namespace AlfaVertion1
             }
             
             Construct_running_Activity.exercise = new Exercise(parts, this.etWorkOutName.Text);
-            FirebaseHelper.Add(Construct_running_Activity.exercise);
+            FirebaseHelper.Add(Construct_running_Activity.exercise); 
             MainActivity.allExerci.Add(Construct_running_Activity.exercise);
             //UpdateDBNewExercise();
 

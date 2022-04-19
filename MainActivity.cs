@@ -12,6 +12,7 @@ using Android.Content;
 using Android.Views;
 using Xamarin.Android;
 using Android.Content.PM;
+using System.Net.NetworkInformation;
 //using Android.Gms;
 //using Android.Gms.Maps;
 
@@ -30,6 +31,7 @@ namespace AlfaVertion1
 
         public static Exercise theOneInUse { get; set; }
 
+        public static ISharedPreferences userName;
         protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -46,6 +48,8 @@ namespace AlfaVertion1
             //db.DeleteAll<Exercise>();
             */
             MainActivity.allExerci = await FirebaseHelper.GetAll();
+
+            userName= this.GetSharedPreferences("details", FileCreationMode.Private);
 
             this.btMakeRunning = (Button)FindViewById(Resource.Id.btrunning);
             //this.btMakeExercise = (Button)FindViewById(Resource.Id.btexe);
@@ -64,9 +68,33 @@ namespace AlfaVertion1
 
             //var mapFragment = (MapFragment)FragmentManager.FindFragmentById(Resource.Id.map);
             //mapFragment.GetMapAsync(this);
+            string uName = userName.GetString("UserName", "0");
+            Toast.MakeText(this, "" + userName.GetString("UserName", "0"), ToastLength.Long).Show();
+            if (uName.Equals("0"))
+            {
+                uName = GetDeviceMacAddress();
+                var editor = userName.Edit();
+                editor.PutString("UserName", uName);
+                editor.Commit();
+            }
+            
 
         }
-        
+        public static string GetDeviceMacAddress()
+        {
+            foreach (var netInterface in NetworkInterface.GetAllNetworkInterfaces())
+            {
+                if (netInterface.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 ||
+                    netInterface.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
+                {
+                    var address = netInterface.GetPhysicalAddress();
+                    return BitConverter.ToString(address.GetAddressBytes());
+
+                }
+            }
+
+            return "NoMac";
+        }
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
             MenuInflater.Inflate(Resource.Menu.menu1, menu);
@@ -143,6 +171,7 @@ namespace AlfaVertion1
         }
         public void ShowEndDialogFunc()
         {
+            /*
             d = new Dialog(this);
             d.SetContentView(Resource.Layout.time_Dialog_Layout);
             d.SetTitle("exercise ended");
@@ -158,6 +187,7 @@ namespace AlfaVertion1
             tvExDis.Text = "distance:" + (((int)idistance) / 100) / 10.0 + "km";
             tvExPace.Text = "pace:" + (idistance / 1000) / (timesec / 3600.0) + "km/h";
             d.Show();
+            */            
         }
         protected override void OnResume()
         {

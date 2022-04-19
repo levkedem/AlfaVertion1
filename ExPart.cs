@@ -25,6 +25,8 @@ namespace AlfaVertion1
             this.currentRep = 1;
             this.currentIntrval = 0;
         }
+        public ExPart()
+        { }
 
         public void StartPart()
         {

@@ -19,7 +19,7 @@ namespace AlfaVertion1
         public string speed, type;
         
 
-        public Interval_v2(int dis, string t)
+        public Interval_v2(int dis, string t): base(dis,t,"dis")
         {
             this.distanceM = dis;
             this.speed = t;
@@ -34,7 +34,7 @@ namespace AlfaVertion1
         {
             return this.speed;
         }
-        public override string GetType()
+        public override string GetType1()
         {
             return this.type;
         }

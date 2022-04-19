@@ -18,6 +18,8 @@ namespace AlfaVertion1
         
         public int id { get; set; }
 
+        public string user;
+
         public List<ExPart> parts;
         public DateTime date;
         public string name { get; set; }
@@ -44,7 +46,9 @@ namespace AlfaVertion1
             {
                 this.name = "Exercise";
             }
-            this.currentPart = 0;           
+            this.currentPart = 0;
+
+            this.user = MainActivity.userName.GetString("UserName", "0");
         }
         public Exercise(List<ExPart> parts, string n, int t, double km)
         {

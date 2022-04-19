@@ -24,9 +24,11 @@ namespace AlfaVertion1
             this.repeats = part.repeats;
             this.currentRep = 1;
             currentIntrval = 0;
+            this.intervals = new List<Interval_VDB>();
             for (int i = 0; i < part.intervals.Count; i++)
             {
-                this.intervals[i] =new Interval_VDB(part.intervals[i]);
+                this.intervals.Add(new Interval_VDB(part.intervals[i]));
+                Console.WriteLine(i);
             }
         }
         public ExPart GetNprmalPart()

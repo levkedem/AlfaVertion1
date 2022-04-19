@@ -18,20 +18,22 @@ namespace AlfaVertion1
         public int distanceM;
         public string speed, type;
 
+        public Interval_VDB()
+        { }
         public Interval_VDB(Interval_v0 interval)
         {
-            if (interval.GetType().Equals("time"))
+            if (interval.GetType1().Equals("time"))
             {
                 this.time = TimeSpan.FromSeconds(interval.GetAtrtribute());
                 this.speed = interval.GetSpeed();
-                this.type = interval.GetType();
+                this.type = interval.GetType1();
                 this.distanceM = 0;
             }
-            else if (interval.GetType().Equals("dis"))
+            else if (interval.GetType1().Equals("dis"))
             {
                 this.distanceM = interval.GetAtrtribute();
                 this.speed = interval.GetSpeed();
-                this.type = interval.GetType();
+                this.type = interval.GetType1();
                 this.time = TimeSpan.FromSeconds(0);
             }
         }

@@ -17,15 +17,27 @@ namespace AlfaVertion1
 {
     public class FirebaseHelper
     {
-        public static FirebaseClient client= new FirebaseClient("https://cohesive-geode-337809-default-rtdb.firebaseio.com/");
-        private static string database = "locationsDb";       
+        public static FirebaseClient client= new FirebaseClient("https://runningappv3-default-rtdb.firebaseio.com/");
+        private static string database = "locationsDb2";
 
-        public static async Task<List<Exercise>> GetAll()
+
+        public static async Task Add(Exercise exercise)
         {
-            var respone = await client.Child(database).OnceAsync<Exercise>();
-            return (respone).Select(item => new Exercise
-                {
-                    id = item.Object.id,
+            await client
+                .Child(database)
+                .PostAsync(exercise);
+
+        }
+        public static async Task<List<Exercise>> GetAll()
+        {  
+                     
+            var response = await client.Child(database).OnceAsync<Exercise>();
+            //var cast = response.Select(item => (FirebaseObject<DbExercise>)item);
+            var cast = response.Select(item => (Exercise)item.Object).ToList();
+
+            return (response).Select(item => new Exercise
+            {
+                    user=item.Object.user,
                     parts = item.Object.parts,
                     date = item.Object.date,
                     name=item.Object.name,
@@ -34,20 +46,26 @@ namespace AlfaVertion1
 
                 }).ToList();
         }
-
-        public static async Task Add(Exercise exercise)
+        
+        /*public static async Task<List<Exercise>> GetAllNormalExerecise()
         {
-            await client
-                .Child(database)
-                .PostAsync(exercise);
-        }
+            List<DbExercise> dBList =await GetAll();
+              List<Exercise> eXListT = new List<Exercise>();
+              for (int i = 0; i < dBList.Count; i++)
+              {
+                  eXListT.Add(dBList[i].ConvertToNormal());
+              }
+              return eXListT;
+        }*/
+
+        
 
         public static async Task<Exercise> Get(string name)
         {
             var allPersons = await GetAll();
             await client
               .Child(database)
-              .OnceAsync<Exercise>();
+              .OnceAsync<DbExercise>();
             return allPersons.Where(a => a.name == name).FirstOrDefault();
         }
 
@@ -61,6 +79,7 @@ namespace AlfaVertion1
               .Child(database)
               .Child(toUpdatePerson.Key)
               .PutAsync(state);
+            
         }
         public static async Task Delete(string name)
         {
@@ -70,5 +89,6 @@ namespace AlfaVertion1
             await client.Child(database).Child(toDeletePerson.Key).DeleteAsync();
 
         }
+        
     }
 }
