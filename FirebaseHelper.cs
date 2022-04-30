@@ -30,7 +30,6 @@ namespace AlfaVertion1
         }
         public static async Task<List<Exercise>> GetAll()
         {  
-                     
             var response = await client.Child(database).OnceAsync<Exercise>();
             //var cast = response.Select(item => (FirebaseObject<DbExercise>)item);
             var cast = response.Select(item => (Exercise)item.Object).ToList();
@@ -38,6 +37,7 @@ namespace AlfaVertion1
             return (response).Select(item => new Exercise
             {
                     user=item.Object.user,
+                    isPublic=item.Object.isPublic,
                     parts = item.Object.parts,
                     date = item.Object.date,
                     name=item.Object.name,
@@ -46,6 +46,7 @@ namespace AlfaVertion1
 
                 }).ToList();
         }
+       
         
         /*public static async Task<List<Exercise>> GetAllNormalExerecise()
         {
@@ -68,7 +69,22 @@ namespace AlfaVertion1
               .OnceAsync<DbExercise>();
             return allPersons.Where(a => a.name == name).FirstOrDefault();
         }
+        public static async Task<List<Exercise>> GetAllPublic()
+        {
+            var allExercises = await GetAll();
 
+            string mac = MainActivity.userName.GetString("UserName", "0");
+
+            return allExercises.Where(a => a.user != mac && a.isPublic==true).ToList();
+        }
+        public static async Task<List<Exercise>> GetAllPersonalExercises()
+        {
+            var allExercises = await GetAll();
+
+            string mac = MainActivity.userName.GetString("UserName", "0");
+
+            return allExercises.Where(a => a.user == mac).ToList();
+        }
         public static async Task Update(Exercise state)
         {
             var toUpdatePerson = (await client

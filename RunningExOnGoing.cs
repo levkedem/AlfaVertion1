@@ -58,6 +58,8 @@ namespace AlfaVertion1
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.MasachOnGoing);
+            this.Window.SetFlags(WindowManagerFlags.KeepScreenOn, WindowManagerFlags.KeepScreenOn);
+
 
             Intent intent = new Intent(this, typeof(MyService));
             StopService(intent);
@@ -150,11 +152,16 @@ namespace AlfaVertion1
 
             this.exerciseInUse.timeForThisEx = this.time;
             this.exerciseInUse.distanceForThisExKM = ((int)this.currentDist / 10) / 100.0;
+            int mNum = MainActivity.distanceInThisDvice.GetInt("Distance", 0) + Convert.ToInt32( this.currentDist) ;
 
-            ExerciseState = false;            
-            Intent i1 = new Intent(this, typeof(MainActivity));
-            StartActivity(i1);
+            var editor = MainActivity.distanceInThisDvice.Edit();
+            editor.PutInt("Distance", mNum);
+            //editor.PutInt("lastExm", (int)this.currentDist);
+            editor.Commit();
 
+            ExerciseState = false;
+            string endString = "Congratulations, you finished the exercise. " + "time: " + this.time / 60 + " minutes and " + this.time % 60 + " seconds. distance: " + this.currentDist / 1000 + " kilometers and " + this.currentDist % 1000 + " meters";
+            SpeakLastWords(endString); 
         }
         private void OkAction(object sender, DialogClickEventArgs e)
         {
@@ -177,7 +184,7 @@ namespace AlfaVertion1
         {
             try
             {
-                var request = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(30));
+                var request = new GeolocationRequest(GeolocationAccuracy.High, TimeSpan.FromSeconds(30));
                 cts = new CancellationTokenSource();
                 Location location1 = await Geolocation.GetLocationAsync(request, cts.Token);
 
@@ -329,8 +336,8 @@ namespace AlfaVertion1
                         s = "" + sec;
                     }
 
-                    Interval_v0 curInterval = exerciseInUse.GetCurrentInterval();
-                    string whatatoShow = "eeeeeerrrr";
+                    Interval curInterval = exerciseInUse.GetCurrentInterval();
+                    string whatatoShow = "";
                     if (needsNewInterval)
                     {
                         whatatoShow = SetNewInterval(curInterval);
@@ -400,7 +407,7 @@ namespace AlfaVertion1
             }
             return (int)dist;
         }
-        public string SetNewInterval(Interval_v0 curInterval)
+        public string SetNewInterval(Interval curInterval)
         {
             string str="";
             //Vibration.Vibrate(TimeSpan.FromMilliseconds(700));
@@ -433,16 +440,22 @@ namespace AlfaVertion1
             return str;
 
         }
-        public string MakeTextToInterval(Interval_v0 interval)//מכין את המחרוזת שאמורה להאמר
+        public string MakeTextToInterval(Interval interval)//מכין את המחרוזת שאמורה להאמר
         {
             string result = "new interval,";
             if (interval.GetType1().Equals("time"))
             {
-                result = result + "run for " + interval.GetAtrtribute() / 60 + " minutes and " + interval.GetAtrtribute() % 60 + " seconds," + interval.GetSpeed();
+                if (interval.GetSpeed().Equals("med"))
+                result = result + "run for " + interval.GetAtrtribute() / 60 + " minutes and " + interval.GetAtrtribute() % 60 + " seconds," + "Medium";
+                else
+                    result = result + "run for " + interval.GetAtrtribute() / 60 + " minutes and " + interval.GetAtrtribute() % 60 + " seconds," + interval.GetSpeed();
             }
             else if (interval.GetType1().Equals("dis"))
             {
-                result = result + "run " + interval.GetAtrtribute() + " meters, " + interval.GetSpeed();
+                if (interval.GetSpeed().Equals("med"))
+                    result = result + "run " + interval.GetAtrtribute() + " meters, " + "Medium";                
+                else
+                    result = result + "run " + interval.GetAtrtribute() + " meters, " + interval.GetSpeed();
             }
             return result;
         }
@@ -450,6 +463,20 @@ namespace AlfaVertion1
         {
             await TextToSpeech.SpeakAsync(s);
            
+        }
+        public async Task SpeakLastWords(string s)
+        {
+            await TextToSpeech.SpeakAsync(s);
+
+            double dInDevice = MainActivity.distanceInThisDvice.GetInt("Distance", 0);
+            double distanceKm = Convert.ToInt32(dInDevice * 100) / 100000.0;
+
+            string s2 = "in total you run " + distanceKm + " kilometers, good job";
+            await TextToSpeech.SpeakAsync(s2);
+
+            Intent i1 = new Intent(this, typeof(MainActivity));
+            StartActivity(i1);
+
         }
         public void OnAccuracyChanged(Sensor sensor, [GeneratedEnum] SensorStatus accuracy)
         {
@@ -502,6 +529,13 @@ namespace AlfaVertion1
             base.OnPause();
             UnregisterReceiver(broadCastBattery);
             sensorManager.UnregisterListener(this);
+        }
+        public override void OnBackPressed()
+        {
+            base.OnBackPressed();
+            Intent i1 = new Intent(this, typeof(MainActivity));
+            StartActivity(i1);
+            
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {

@@ -13,11 +13,11 @@ using Android.Widget;
 
 namespace AlfaVertion1
 {
-    class Interval_V1:Interval_v0
+    class Interval_Time:Interval
     {
         public TimeSpan time;
         public string speed, type;
-        public Interval_V1(TimeSpan timeSpan, string t):base((timeSpan.Seconds+timeSpan.Minutes*60),t,"time")
+        public Interval_Time(TimeSpan timeSpan, string t):base((timeSpan.Seconds+timeSpan.Minutes*60),t,"time")
         {
             this.time = timeSpan;
             this.speed = t;

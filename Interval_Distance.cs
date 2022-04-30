@@ -13,13 +13,13 @@ using Android.Widget;
 
 namespace AlfaVertion1
 {
-    class Interval_v2 : Interval_v0
+    class Interval_Distance : Interval
     {
         public int distanceM;
         public string speed, type;
         
 
-        public Interval_v2(int dis, string t): base(dis,t,"dis")
+        public Interval_Distance(int dis, string t): base(dis,t,"dis")
         {
             this.distanceM = dis;
             this.speed = t;

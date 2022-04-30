@@ -33,7 +33,7 @@ namespace AlfaVertion1
         }
         public ExPart GetNprmalPart()
         {
-            List<Interval_v0> intervalsForPart = new List<Interval_v0>();
+            List<Interval> intervalsForPart = new List<Interval>();
             for (int i = 0; i < intervals.Count; i++)
             {
                 intervalsForPart.Add(intervals[i].GetConvertedInterval());

@@ -20,7 +20,7 @@ namespace AlfaVertion1
 
         public Interval_VDB()
         { }
-        public Interval_VDB(Interval_v0 interval)
+        public Interval_VDB(Interval interval)
         {
             if (interval.GetType1().Equals("time"))
             {
@@ -38,17 +38,17 @@ namespace AlfaVertion1
             }
         }
         
-        public Interval_v0 GetConvertedInterval()
+        public Interval GetConvertedInterval()
         {
             if (this.type.Equals("time")|| this.type.Equals("warm up")||this.type.Equals("cool down"))
             {
-                Interval_V1 v1Interval = new Interval_V1(this.time, this.type);
-                return (Interval_v0)v1Interval;
+                Interval_Time v1Interval = new Interval_Time(this.time, this.type);
+                return (Interval)v1Interval;
             }
             else if (this.GetType().Equals("dis"))
             {
-                Interval_v2 v2Interval = new Interval_v2(this.distanceM, this.speed);
-                return (Interval_v0)v2Interval;
+                Interval_Distance v2Interval = new Interval_Distance(this.distanceM, this.speed);
+                return (Interval)v2Interval;
             }
             return null;
         }

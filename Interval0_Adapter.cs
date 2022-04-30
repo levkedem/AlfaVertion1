@@ -13,11 +13,11 @@ using Android.Widget;
 
 namespace AlfaVertion1
 {
-    public class Interval0_Adapter: BaseAdapter<Interval_v0>
+    public class Interval0_Adapter: BaseAdapter<Interval>
     {
         Context context;
-        List<Interval_v0> intervals;
-        public Interval0_Adapter(Context c,List<Interval_v0> lst)
+        List<Interval> intervals;
+        public Interval0_Adapter(Context c,List<Interval> lst)
         {
             this.context = c;
             this.intervals = lst;
@@ -30,7 +30,7 @@ namespace AlfaVertion1
         {
             return position;
         }
-        public override Interval_v0 this[int position]
+        public override Interval this[int position]
         {
             get { return this.intervals[position]; }
         }
@@ -39,7 +39,7 @@ namespace AlfaVertion1
             get { return this.intervals.Count; }
         }
 
-        public List<Interval_v0> getList()
+        public List<Interval> getList()
         {
             return this.intervals;
         }
@@ -53,7 +53,7 @@ namespace AlfaVertion1
             TextView tvPace1 = view1.FindViewById<TextView>(Resource.Id.tvPace);
 
                         
-            Interval_v0 temp = intervals[position];
+            Interval temp = intervals[position];
             if (temp != null)
             {
 

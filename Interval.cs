@@ -13,17 +13,17 @@ using Android.Widget;
 
 namespace AlfaVertion1
 {
-    public class Interval_v0
+    public class Interval
     {
         public int atrtribute;
         public string speed, type;
-        public Interval_v0(int a, string speed, string type)
+        public Interval(int a, string speed, string type)
         {
             this.atrtribute = a;
             this.speed = speed;
             this.type = type;
         }
-        public Interval_v0()
+        public Interval()
         { }
 
         public virtual int GetAtrtribute()

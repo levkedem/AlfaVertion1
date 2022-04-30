@@ -19,6 +19,7 @@ namespace AlfaVertion1
         public int id { get; set; }
 
         public string user;
+        public bool isPublic;
 
         public List<ExPart> parts;
         public DateTime date;
@@ -35,7 +36,7 @@ namespace AlfaVertion1
         
         }
         
-        public Exercise(List<ExPart> parts,string n)
+        public Exercise(List<ExPart> parts,string n, bool ispub)
         {
             this.parts = parts;
             this.date = DateTime.Now;
@@ -49,6 +50,7 @@ namespace AlfaVertion1
             this.currentPart = 0;
 
             this.user = MainActivity.userName.GetString("UserName", "0");
+            this.isPublic = ispub;
         }
         public Exercise(List<ExPart> parts, string n, int t, double km)
         {
@@ -79,7 +81,7 @@ namespace AlfaVertion1
             this.name = name;
         }
 
-        public Interval_v0 GetCurrentInterval()
+        public Interval GetCurrentInterval()
         {
             return this.parts[this.currentPart].getCurrent();
         }

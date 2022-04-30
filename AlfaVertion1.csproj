@@ -71,9 +71,9 @@
     <Compile Include="ExPartDB.cs" />
     <Compile Include="FirebaseHelper.cs" />
     <Compile Include="Interval0_Adapter.cs" />
-    <Compile Include="Interval_v0.cs" />
-    <Compile Include="Interval_V1.cs" />
-    <Compile Include="Interval_v2.cs" />
+    <Compile Include="Interval.cs" />
+    <Compile Include="Interval_Time.cs" />
+    <Compile Include="Interval_Distance.cs" />
     <Compile Include="Interval_VDB.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Make_running_Interval_Activity.cs" />
@@ -83,7 +83,6 @@
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RunningExOnGoing.cs" />
-    <Compile Include="UserID.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
@@ -214,6 +213,9 @@
     <AndroidResource Include="Resources\layout\End_Dialog_Layout.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\runningicon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

@@ -26,12 +26,16 @@ namespace AlfaVertion1
         Button save;
 
         Dialog d;
-        EditText etDis, etmin, etsec;
+
+        NumberPicker kmPicker, meterPicker;
+        NumberPicker hoursPicker, minPicker,secPicker;
+        string[] metersArr;
+
         Button saveDialog;
 
         int witchDialog;
         string speed;
-        Interval_v0 interval0;
+        Interval interval0;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -51,6 +55,13 @@ namespace AlfaVertion1
             rgType = (RadioGroup)FindViewById(Resource.Id.rgType);
             rbDist = (RadioButton)FindViewById(Resource.Id.rbDis1);
             rbTime = (RadioButton)FindViewById(Resource.Id.rbTime1);
+
+            metersArr =new string[19];
+            for (int i = 0; i < metersArr.Length; i++)
+            {
+                int num= i * 50 + 50;
+                metersArr[i] = Convert.ToString(num); 
+            }
 
 
             rbDist.Click += RbDist_Click;
@@ -83,12 +94,12 @@ namespace AlfaVertion1
 
             if (this.dis!=0)
             {
-                Interval_v2 interval = new Interval_v2((int)(this.dis * 1000), speed);
+                Interval_Distance interval = new Interval_Distance((int)(this.dis * 1000), speed);
                 this.interval0 = interval;               
             }
             else if (this.time!=TimeSpan.Zero)
             {
-                Interval_V1 interval = new Interval_V1(time, speed);
+                Interval_Time interval = new Interval_Time(time, speed);
                 this.interval0 = interval;
             }
             if (this.interval0!=null)
@@ -119,8 +130,19 @@ namespace AlfaVertion1
             d.SetTitle("set Time for interval");
             d.SetCancelable(true);
 
-            etmin = (EditText)d.FindViewById(Resource.Id.etMin);
-            etsec = (EditText)d.FindViewById(Resource.Id.etSec);
+            
+
+            hoursPicker= (NumberPicker)d.FindViewById(Resource.Id.npHours);
+            this.hoursPicker.MaxValue = 24;
+            this.hoursPicker.MinValue = 0;
+
+            this.minPicker= (NumberPicker)d.FindViewById(Resource.Id.npMin);
+            this.minPicker.MaxValue = 60;
+            this.minPicker.MinValue = 0;
+
+            this.secPicker = (NumberPicker)d.FindViewById(Resource.Id.npSec);
+            this.secPicker.MaxValue = 60;
+            this.secPicker.MinValue = 0;
             saveDialog = (Button)d.FindViewById(Resource.Id.btSaveDialog);
             d.Show();
             saveDialog.Click += saveDialog_Click;
@@ -134,8 +156,16 @@ namespace AlfaVertion1
             d.SetTitle("set Distance for the interval");
             d.SetCancelable(true);
 
-            etDis = (EditText)d.FindViewById(Resource.Id.etDistance1);
             saveDialog = (Button)d.FindViewById(Resource.Id.btSaveDialog);
+            this.kmPicker = (NumberPicker)d.FindViewById(Resource.Id.npKm);
+            this.kmPicker.MaxValue=42;
+            this.kmPicker.MinValue = 0;
+
+            this.meterPicker = (NumberPicker)d.FindViewById(Resource.Id.npM);
+            this.meterPicker.MaxValue = metersArr.Length-1;
+            this.meterPicker.MinValue = 0;
+            this.meterPicker.SetDisplayedValues(metersArr);
+
             d.Show();
             saveDialog.Click += saveDialog_Click;
         }
@@ -144,19 +174,27 @@ namespace AlfaVertion1
         {
             if (witchDialog == 2)
             {
-                this.typeCounter.Text = "" + etDis.Text + " km";
-                if (etDis.Text == null)
-                    etDis.Text = "3";
-
-                dis = Convert.ToDouble(etDis.Text);
+                this.typeCounter.Text = "" + (kmPicker.Value*1000.0 +Convert.ToInt32( metersArr[meterPicker.Value])) /1000.0 + " km";
+                
+                dis = Convert.ToDouble((kmPicker.Value * 1000.0 + Convert.ToInt32(metersArr[meterPicker.Value])) / 1000.0);
                 time = TimeSpan.Zero;
                 d.Dismiss();
             }
             else if (witchDialog == 1)
             {
-                this.typeCounter.Text = "" + (Convert.ToInt32(etmin.Text) + Convert.ToInt32(etsec.Text) / 60) + ":" + Convert.ToInt32(etsec.Text) % 60;
+                string h=Convert.ToString( hoursPicker.Value), m = Convert.ToString(minPicker.Value), s = Convert.ToString(secPicker.Value);
+                if (m.Length==1)
+                {
+                    m = "0" + m;
+                }
+                if (s.Length == 1)
+                {
+                    s = "0" + s;
+                }
+
+                this.typeCounter.Text = h + ":" + m + ":" + s;
                 dis = 0;
-                int sec = Convert.ToInt32(etmin.Text) * 60 + Convert.ToInt32(etsec.Text);
+                int sec = hoursPicker.Value * 3600 + minPicker.Value * 60 + secPicker.Value;
                 time = TimeSpan.FromSeconds(sec);
                 d.Dismiss();
             }

@@ -16,10 +16,11 @@ namespace AlfaVertion1
     public class RecentWorkoutsActivity1 : Activity
     {
         public string path;
-        
 
-        ListView listView;
-        ExerciseAdapter1 adapter1;
+        List<Exercise> privateEx, PublicEx;
+
+        ListView privateExrciseLV, publicEcerciseLV;
+        ExerciseAdapter1 adapter1, adapter2;
 
 
         protected override  void OnCreate(Bundle savedInstanceState)
@@ -27,25 +28,62 @@ namespace AlfaVertion1
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.Recent_workouts_layout);
 
+            string mac = MainActivity.userName.GetString("UserName", "0");
+            this.privateEx = GetExercisesOfUserGiven(MainActivity.allExerci, mac);
+            this.PublicEx = GetPublicExercisesOfUserGiven(MainActivity.allExerci, mac);
+
+            this.privateExrciseLV = (ListView)FindViewById(Resource.Id.lvRecent);
             
+            adapter1 = new ExerciseAdapter1(this, privateEx);
+            privateExrciseLV.Adapter = adapter1;
 
-            this.listView = (ListView)FindViewById(Resource.Id.lvRecent);
+            this.privateExrciseLV.ItemClick += ListView_ItemClick;
+            this.privateExrciseLV.ItemLongClick += ListView_ItemLongClick;
 
 
-            adapter1 = new ExerciseAdapter1(this, MainActivity.allExerci);
-            listView.Adapter = adapter1;
+            this.publicEcerciseLV = (ListView)FindViewById(Resource.Id.lvPublicWorkouts);
 
-            this.listView.ItemClick += ListView_ItemClick;
-            this.listView.ItemLongClick += ListView_ItemLongClick;
+            adapter2 = new ExerciseAdapter1(this, PublicEx);
+            publicEcerciseLV.Adapter = adapter2;
 
+            this.publicEcerciseLV.ItemClick += PublicEcerciseLV_ItemClick;
             // Create your application here
+        }
+
+        
+
+        public List<Exercise> GetExercisesOfUserGiven(List<Exercise> lst,string mac)
+        {
+            List<Exercise> nlst = new List<Exercise>();
+
+            foreach (Exercise ex in lst)
+            {
+                if (ex.user.Equals(mac))
+                {
+                    nlst.Add(ex);
+                }
+            }
+            return nlst;
+        }
+        public List<Exercise> GetPublicExercisesOfUserGiven(List<Exercise> lst, string mac)
+        {
+            List<Exercise> nlst = new List<Exercise>();
+
+            foreach (Exercise ex in lst)
+            {
+                if (!(ex.user.Equals(mac))&& ex.isPublic)
+                {
+                    nlst.Add(ex);
+                }
+            }
+            return nlst;
         }
 
         private void ListView_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
             if (e.Position != null)
             {
-                MainActivity.theOneInUse = MainActivity.allExerci[e.Position];
+                MainActivity.theOneInUse = this.privateEx[e.Position];
             }
             Intent i1 = new Intent(this, typeof(RunningExOnGoing));
             StartActivity(i1);
@@ -55,11 +93,34 @@ namespace AlfaVertion1
         {
             if (e.Position != null)
             {
-                FirebaseHelper.Delete(MainActivity.allExerci[e.Position].name);//add awaut
+                FirebaseHelper.Delete(this.privateEx[e.Position].name);//add awaut
 
-                MainActivity.allExerci.RemoveAt(e.Position);
+
+                DeleteExFromList(this.privateEx[e.Position]);
+                this.privateEx.RemoveAt(e.Position);
+                //MainActivity.allExerci.RemoveAt(e.Position);
                 adapter1.NotifyDataSetChanged();
             }
+        }
+        public void DeleteExFromList(Exercise ex)
+        {
+            for (int i = 0; i < MainActivity.allExerci.Count; i++)
+            {
+                if (MainActivity.allExerci[i]==ex)
+                {
+                    MainActivity.allExerci.RemoveAt(i);
+                }
+            }
+        }
+        
+        private void PublicEcerciseLV_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
+        {
+            if (e.Position != null)
+            {
+                MainActivity.theOneInUse = this.PublicEx[e.Position];
+            }
+            Intent i1 = new Intent(this, typeof(RunningExOnGoing));
+            StartActivity(i1);
         }
         public void ResumeMusic()
         {
@@ -87,6 +148,13 @@ namespace AlfaVertion1
                 ResumeMusic();
 
            
+        }
+        public override void OnBackPressed()
+        {
+            base.OnBackPressed();
+            Intent i1 = new Intent(this, typeof(MainActivity));
+            StartActivity(i1);
+
         }
         protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
         {

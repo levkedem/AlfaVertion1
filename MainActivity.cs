@@ -17,8 +17,8 @@ using System.Net.NetworkInformation;
 //using Android.Gms.Maps;
 
 namespace AlfaVertion1
-{
-    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true, ScreenOrientation = ScreenOrientation.Portrait)]
+{   
+    [Activity(Label = "Run For Your Life", Theme = "@style/AppTheme", MainLauncher = true, ScreenOrientation = ScreenOrientation.Portrait, Icon = "@drawable/runningicon")]
     public class MainActivity : AppCompatActivity
     {
         Button btMakeRunning, btMakeExercise, btRecentWorkouts;
@@ -32,13 +32,15 @@ namespace AlfaVertion1
         public static Exercise theOneInUse { get; set; }
 
         public static ISharedPreferences userName;
+        public static ISharedPreferences distanceInThisDvice;//in meters
+
+        public bool isJustStarted;
         protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.activity_main);
-
             /*
             path = HelperClass.Path();
             var db = new SQLiteConnection(path);
@@ -50,6 +52,7 @@ namespace AlfaVertion1
             MainActivity.allExerci = await FirebaseHelper.GetAll();
 
             userName= this.GetSharedPreferences("details", FileCreationMode.Private);
+            distanceInThisDvice = this.GetSharedPreferences("details2", FileCreationMode.Private);
 
             this.btMakeRunning = (Button)FindViewById(Resource.Id.btrunning);
             //this.btMakeExercise = (Button)FindViewById(Resource.Id.btexe);
@@ -69,7 +72,7 @@ namespace AlfaVertion1
             //var mapFragment = (MapFragment)FragmentManager.FindFragmentById(Resource.Id.map);
             //mapFragment.GetMapAsync(this);
             string uName = userName.GetString("UserName", "0");
-            Toast.MakeText(this, "" + userName.GetString("UserName", "0"), ToastLength.Long).Show();
+            //Toast.MakeText(this, "" + userName.GetString("UserName", "0"), ToastLength.Long).Show();
             if (uName.Equals("0"))
             {
                 uName = GetDeviceMacAddress();
@@ -77,8 +80,8 @@ namespace AlfaVertion1
                 editor.PutString("UserName", uName);
                 editor.Commit();
             }
-            
 
+            isJustStarted = true;
         }
         public static string GetDeviceMacAddress()
         {
@@ -99,15 +102,18 @@ namespace AlfaVertion1
         {
             MenuInflater.Inflate(Resource.Menu.menu1, menu);
 
-            IMenuItem item=menu.GetItem(0);
-            if (musicState)
+            IMenuItem item = menu.GetItem(0);
+            item.SetTitle("mute");
+            /*
+            if (musicState || isJustStarted)
             {
                 item.SetTitle("mute");
+                isJustStarted = false;
             }
             else
             {
                 item.SetTitle("unmute");
-            }
+            }*/
             return true;
         }
         public override bool OnOptionsItemSelected(IMenuItem item)

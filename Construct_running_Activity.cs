@@ -17,9 +17,9 @@ namespace AlfaVertion1
     [Activity(Label = "Construct_running_Activity", ScreenOrientation = ScreenOrientation.Portrait)]
     public class Construct_running_Activity : Activity
     {
-        public static List<Interval_v0> interval_List1 { get; set; }
-        public static List<Interval_v0> interval_List2 { get; set; }
-        public static List<Interval_v0> interval_List3 { get; set; }
+        public static List<Interval> interval_List1 { get; set; }
+        public static List<Interval> interval_List2 { get; set; }
+        public static List<Interval> interval_List3 { get; set; }
 
         Interval0_Adapter adapter1, adapter2, adapter3;
 
@@ -30,6 +30,7 @@ namespace AlfaVertion1
         SeekBar sk1, sk2, sk3;
         TextView rep1, rep2, rep3;
         int repnum1, repnum2, repnum3;
+        Switch swIsPublic;
 
         public static Exercise exercise { get; set; }
 
@@ -40,20 +41,20 @@ namespace AlfaVertion1
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.Construct_WorkOut_Running);
 
-            interval_List1 = new List<Interval_v0>();
+            interval_List1 = new List<Interval>();
             adapter1 = new Interval0_Adapter(this, interval_List1);
             listView1 = (ListView)FindViewById(Resource.Id.listViewInterval1);
             listView1.Adapter = adapter1;
             listView1.ItemLongClick += ListView1_ItemLongClick;
 
-            interval_List2 = new List<Interval_v0>();
+            interval_List2 = new List<Interval>();
             adapter2 = new Interval0_Adapter(this, interval_List2);
             listView2 = (ListView)FindViewById(Resource.Id.listViewInterval2);
             listView2.Adapter = adapter2; 
             listView2.ItemLongClick += ListView2_ItemLongClick;
 
 
-            interval_List3 = new List<Interval_v0>();
+            interval_List3 = new List<Interval>();
             adapter3 = new Interval0_Adapter(this, interval_List3);
             listView3 = (ListView)FindViewById(Resource.Id.listViewInterval3);
             listView3.Adapter = adapter3;
@@ -66,6 +67,7 @@ namespace AlfaVertion1
             this.makeInterval1 = (Button)FindViewById(Resource.Id.BtAddInterval1);
             this.makeInterval2 = (Button)FindViewById(Resource.Id.BtAddInterval2);
             this.makeInterval3 = (Button)FindViewById(Resource.Id.BtAddInterval3);
+            this.swIsPublic = (Switch)FindViewById(Resource.Id.isPublic);
             this.finish = (Button)FindViewById(Resource.Id.BtFinish);
             this.toArchive = (Button)FindViewById(Resource.Id.BtAddToArc);
 
@@ -162,8 +164,8 @@ namespace AlfaVertion1
             if (this.cbWarm.Checked)
             {
                 Bitmap warmBit= BitmapFactory.DecodeResource(Resources, Resource.Drawable.slow);
-                Interval_V1 tempInterval = new Interval_V1(TimeSpan.FromMinutes(5), "warm up");
-                List<Interval_v0> tempList = new List<Interval_v0>();
+                Interval_Time tempInterval = new Interval_Time(TimeSpan.FromMinutes(5), "warm up");
+                List<Interval> tempList = new List<Interval>();
                 tempList.Add(tempInterval);
 
                 parts.Add(new ExPart(1, tempList));
@@ -195,14 +197,14 @@ namespace AlfaVertion1
             if (this.cbCool.Checked)
             {
                 
-                Interval_V1 tempInterval2 = new Interval_V1(TimeSpan.FromMinutes(5), "warm up");
-                List<Interval_v0> tempList2 = new List<Interval_v0>();
+                Interval_Time tempInterval2 = new Interval_Time(TimeSpan.FromMinutes(5), "warm up");
+                List<Interval> tempList2 = new List<Interval>();
                 tempList2.Add(tempInterval2);
 
                 parts.Add(new ExPart(1, tempList2));
             }
             
-            Construct_running_Activity.exercise = new Exercise(parts, this.etWorkOutName.Text);
+            Construct_running_Activity.exercise = new Exercise(parts, this.etWorkOutName.Text,this.swIsPublic.Checked);
             FirebaseHelper.Add(Construct_running_Activity.exercise); 
             MainActivity.allExerci.Add(Construct_running_Activity.exercise);
             //UpdateDBNewExercise();

@@ -15,26 +15,41 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="horizontal">
-        <EditText
-            android:layout_width="60dp"
+        
+        <NumberPicker
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#000000"
-            android:id="@+id/etMin"/>
-        <EditText
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:textColor="#000000"
-            android:id="@+id/etSec"/>
+            android:id="@+id/npHours"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#000000"
-            android:text="min."/>
-         <TextView
+            android:layout_gravity="center_vertical"
+            android:textSize="16dp"
+            android:text="hours"/>
+
+        <NumberPicker
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/npMin"/>
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#000000"
-            android:text="  sec."/>
+            android:layout_gravity="center_vertical"
+            android:textSize="16dp"
+            android:text="min"/>
+        <NumberPicker
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/npSec"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:layout_gravity="center_vertical"
+            android:textSize="16dp"
+            android:text="sec"/>
         </LinearLayout>
     <Button
         android:layout_width="wrap_content"
