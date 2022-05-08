@@ -15,7 +15,7 @@ namespace AlfaVertion1
 {
     class Interval_Distance : Interval
     {
-        public int distanceM;
+        public int distanceM;//dis in meters
         public string speed, type;
         
 

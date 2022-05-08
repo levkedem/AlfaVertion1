@@ -17,8 +17,8 @@ namespace AlfaVertion1
     [IntentFilter(new[] { Intent.ActionBatteryChanged })]
     public class BroadcastBattery : BroadcastReceiver
     {
-        int battery;
-        AlertDialog d;
+        int battery;// battery %
+        AlertDialog d;// dialog from activity
         public BroadcastBattery()
         {
         }

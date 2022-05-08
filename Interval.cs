@@ -15,8 +15,8 @@ namespace AlfaVertion1
 {
     public class Interval
     {
-        public int atrtribute;
-        public string speed, type;
+        public int atrtribute;//atrtribute
+        public string speed, type;//interval speed(fast,med,slow),type
         public Interval(int a, string speed, string type)
         {
             this.atrtribute = a;

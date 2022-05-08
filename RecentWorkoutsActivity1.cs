@@ -152,8 +152,8 @@ namespace AlfaVertion1
         public override void OnBackPressed()
         {
             base.OnBackPressed();
-            Intent i1 = new Intent(this, typeof(MainActivity));
-            StartActivity(i1);
+            //Intent i1 = new Intent(this, typeof(MainActivity));
+            //StartActivity(i1);
 
         }
         protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)

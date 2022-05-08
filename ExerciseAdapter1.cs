@@ -16,7 +16,7 @@ namespace AlfaVertion1
     class ExerciseAdapter1: BaseAdapter<Exercise>
     {
         Context context;
-        List<Exercise> objects;
+        List<Exercise> objects;// exercise list
 
         public ExerciseAdapter1(Context con, List<Exercise> lst)
         {

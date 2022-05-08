@@ -16,7 +16,7 @@ namespace AlfaVertion1
     public class Interval0_Adapter: BaseAdapter<Interval>
     {
         Context context;
-        List<Interval> intervals;
+        List<Interval> intervals;// list of intervals to show
         public Interval0_Adapter(Context c,List<Interval> lst)
         {
             this.context = c;

@@ -14,8 +14,8 @@ namespace AlfaVertion1
 {
     public class ExPart
     {
-        public List<Interval> intervals;
-        public int repeats;
+        public List<Interval> intervals;//all intervals in part
+        public int repeats;// num of repeats
         public int currentRep;
         public int currentIntrval;
         public ExPart(int rep, List<Interval> inList)

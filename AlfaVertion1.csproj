@@ -78,7 +78,7 @@
     <Compile Include="MainActivity.cs" />
     <Compile Include="Make_running_Interval_Activity.cs" />
     <Compile Include="MusicPlayerBroadcastReciever .cs" />
-    <Compile Include="MyService.cs" />
+    <Compile Include="MusicService.cs" />
     <Compile Include="RecentWorkoutsActivity1.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -18,12 +18,12 @@ namespace AlfaVertion1
         
         public int id { get; set; }
 
-        public string user;
+        public string user;//device mac
         public bool isPublic;
 
-        public List<ExPart> parts;
-        public DateTime date;
-        public string name { get; set; }
+        public List<ExPart> parts;// all the part for the exercise
+        public DateTime date;// date of cration
+        public string name { get; set; }//ex name
         public int timeForThisEx { get; set; }
 
         public double distanceForThisExKM { get; set; }

@@ -52,7 +52,7 @@
         android:id="@+id/btoldStaff"
         android:layout_weight="1"            
             android:fontFamily="monospace"
-        android:text="recrnt workouts"/>
+        android:text="archive"/>
         </LinearLayout>
     
 </LinearLayout>

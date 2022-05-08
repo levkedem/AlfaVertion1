@@ -35,6 +35,8 @@ namespace AlfaVertion1
         public static ISharedPreferences distanceInThisDvice;//in meters
 
         public bool isJustStarted;
+
+        bool shouldBeDestroyed;
         protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -62,7 +64,7 @@ namespace AlfaVertion1
             //btMakeExercise.Click += BtMakeExercise_Click;
             btRecentWorkouts.Click += BtRecentWorkouts_Click;
 
-            Intent intent = new Intent(this, typeof(MyService));
+            Intent intent = new Intent(this, typeof(MusicService));
             StartService(intent);
             MainActivity.musicState = true;
             MainActivity.ShowEndingDialog = false;
@@ -82,6 +84,7 @@ namespace AlfaVertion1
             }
 
             isJustStarted = true;
+            this.shouldBeDestroyed = false;
         }
         public static string GetDeviceMacAddress()
         {
@@ -169,7 +172,21 @@ namespace AlfaVertion1
             i.PutExtra("action", 0); // 0 to turn on
             SendBroadcast(i);
         }
-
+        public override void OnBackPressed()
+        {
+            
+            if (this.shouldBeDestroyed)
+            {
+                base.OnBackPressed();
+                OnPause();
+                base.OnDestroy();
+            }
+            else
+            {
+                Toast.MakeText(this, "press again to exit", ToastLength.Short).Show();
+                this.shouldBeDestroyed = true;
+            }
+        }
         protected override void OnPause()
         {
             base.OnPause();
@@ -195,9 +212,11 @@ namespace AlfaVertion1
             d.Show();
             */            
         }
+        
         protected override void OnResume()
         {
             base.OnResume();
+            this.shouldBeDestroyed = false;
             if (musicState)
                 ResumeMusic();
 

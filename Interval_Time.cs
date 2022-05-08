@@ -15,7 +15,7 @@ namespace AlfaVertion1
 {
     class Interval_Time:Interval
     {
-        public TimeSpan time;
+        public TimeSpan time;//interval time
         public string speed, type;
         public Interval_Time(TimeSpan timeSpan, string t):base((timeSpan.Seconds+timeSpan.Minutes*60),t,"time")
         {

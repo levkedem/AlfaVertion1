@@ -14,10 +14,10 @@ using Android.Widget;
 namespace AlfaVertion1
 {
     [Service]
-    public class MyService : Service
+    public class MusicService : Service
     {
         MediaPlayer mp; // media player which plays the music
-        MusicPlayerBroadcastReciever musicPlayerBroadcast; // broadcast reciever, is registered with the media player an plays the music according to the user
+        MusicBroadcastReciever musicPlayerBroadcast; // broadcast reciever, is registered with the media player an plays the music according to the user
 
         public static bool musicStopped = false;
         public override void OnCreate()
@@ -26,7 +26,7 @@ namespace AlfaVertion1
 
             mp = MediaPlayer.Create(this, Resource.Raw.musica);
             mp.SeekTo(17000);
-            musicPlayerBroadcast = new MusicPlayerBroadcastReciever(mp);
+            musicPlayerBroadcast = new MusicBroadcastReciever(mp);
 
             IntentFilter intentFilter = new IntentFilter("music");
             RegisterReceiver(musicPlayerBroadcast, intentFilter);

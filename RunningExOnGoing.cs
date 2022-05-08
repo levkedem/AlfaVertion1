@@ -36,10 +36,10 @@ namespace AlfaVertion1
         int intervalDis;// dis m
         bool needsNewInterval;
 
-        int timeWhenIntervalStarted;
-        int indexOfLocationInListWhenIntervalStarted;
+        int timeWhenIntervalStarted;//state of time when interval started
+        int indexOfLocationInListWhenIntervalStarted;//index of locatin in location list when new interval started
 
-        BroadcastBattery broadCastBattery;
+        BroadcastBattery broadCastBattery;//BroadcastBattery for alert whet battery is low
         AlertDialog.Builder builder;
 
 
@@ -48,10 +48,12 @@ namespace AlfaVertion1
 
         Thread thread1, thread2, thread3;
 
-        SensorManager sensorManager;
+        SensorManager sensorManager;//for light sensor
         Sensor temprSensor;
         bool checkLight;
         AlertDialog.Builder builder2;
+
+        double avgDisForLoc;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -61,8 +63,8 @@ namespace AlfaVertion1
             this.Window.SetFlags(WindowManagerFlags.KeepScreenOn, WindowManagerFlags.KeepScreenOn);
 
 
-            Intent intent = new Intent(this, typeof(MyService));
-            StopService(intent);
+            //Intent intent = new Intent(this, typeof(MusicService));
+            //StopService(intent);
 
             
 
@@ -144,6 +146,9 @@ namespace AlfaVertion1
                 icon.SetImageBitmap(bitPouse);
             }
         }
+
+
+        //when exercise is finished
         public void EndExercise(object s,int n)
         {
             Intent.PutExtra("time", this.time);
@@ -160,7 +165,7 @@ namespace AlfaVertion1
             editor.Commit();
 
             ExerciseState = false;
-            string endString = "Congratulations, you finished the exercise. " + "time: " + this.time / 60 + " minutes and " + this.time % 60 + " seconds. distance: " + this.currentDist / 1000 + " kilometers and " + this.currentDist % 1000 + " meters";
+            string endString = "Congratulations, you finished the exercise. " + "time: " + Convert.ToInt32( this.time / 60) + " minutes and " + Convert.ToInt32(this.time % 60) + " seconds. distance: " + Convert.ToInt32( this.currentDist / 1000) + " kilometers and " + Convert.ToInt32(this.currentDist % 1000) + " meters";
             SpeakLastWords(endString); 
         }
         private void OkAction(object sender, DialogClickEventArgs e)
@@ -168,6 +173,8 @@ namespace AlfaVertion1
             Intent i1 = new Intent(this, typeof(MainActivity));
             StartActivity(i1);
         }
+
+        //controlls GPS requests
         private void GPSThreadManager()//summon GetCurrentLocation every 15 sec
         {
             while (ExerciseState)
@@ -180,6 +187,8 @@ namespace AlfaVertion1
                 Thread.Sleep(TimeSpan.FromSeconds(15));
             }
         }
+
+        //GPS request
         async Task GetCurrentLocation()//asks for Geolocation
         {
             try
@@ -216,6 +225,8 @@ namespace AlfaVertion1
                 // Unable to get location
             }
         }
+
+        //updates TextViews on screen
         private void DistanceThreadManager()//summon calcDis and calcVelocity every 6 sec
         {
             Thread.Sleep(TimeSpan.FromSeconds(15));
@@ -230,6 +241,8 @@ namespace AlfaVertion1
                 Thread.Sleep(TimeSpan.FromSeconds(6));
             }
         }
+
+
         public void calcDis()//calculate distance
         {
             double dist = 0;
@@ -238,11 +251,30 @@ namespace AlfaVertion1
                 for (int i = 0; i < loclist.Count - 1; i++)
                 {
                     double tempDis = 1000 * Location.CalculateDistance(loclist[i], loclist[i + 1], DistanceUnits.Kilometers);
-                    if (tempDis > 8)
+                    
+                    if (i>0)
+                    {
+                        double lastTempDis = 1000 * Location.CalculateDistance(loclist[i - 1], loclist[i], DistanceUnits.Kilometers);
+                        if ((((tempDis>lastTempDis+18)&&(tempDis>lastTempDis*1.8))||(tempDis>avgDisForLoc+23)))
+                        {
+                            if (lastTempDis + 10 < tempDis)
+                            {
+                                dist = dist + lastTempDis;
+                            }
+                            else if (tempDis + 7 < lastTempDis)
+                                dist = dist + avgDisForLoc;
+                            
+                        }
+                        else if(tempDis>12)
+                            dist = dist + tempDis;
+                    }
+                    else if (tempDis > 12)
                     {
                         dist = dist + tempDis;
                     }
+                    //dist = dist + tempDis;
                 }
+                this.avgDisForLoc = dist / (loclist.Count - 1);
                 this.currentDist = dist;
                 string strdistance = String.Format("{0:0.00}", dist);
                 RunOnUiThread(() =>
@@ -251,6 +283,8 @@ namespace AlfaVertion1
                 });
             }
         }
+
+
         public void calcVelocity()//calculate velocity
         {
             if (loclist.Count > 1)
@@ -260,8 +294,8 @@ namespace AlfaVertion1
                 TimeSpan subTime = timeI.Subtract(time0);
                 double hours = subTime.TotalHours;
 
-                double velocity = this.currentDist / hours;
-                string strVel = String.Format("{0:0.00}", velocity / 1000);
+                double velocity = (this.currentDist/1000.0) / hours;
+                string strVel = String.Format("{0:0.0}", velocity);
                 RunOnUiThread(() =>
                 {
                     tvVelocity.Text = strVel;
@@ -308,6 +342,9 @@ namespace AlfaVertion1
             }
 
         }*/
+
+
+        //controls timer and inteval changes
         public void UpdateTime()//do timer
         {
             while (ExerciseState)
@@ -387,6 +424,9 @@ namespace AlfaVertion1
                 Thread.Sleep(1000);
             }
         }
+
+
+        //calc distance from a given index in the list
         public int CalcSpecificDist(int startPoint)//calc distance from specific time
         {
             double dist = 0;
@@ -407,6 +447,8 @@ namespace AlfaVertion1
             }
             return (int)dist;
         }
+
+        //changes interval when needed 
         public string SetNewInterval(Interval curInterval)
         {
             string str="";
@@ -440,6 +482,9 @@ namespace AlfaVertion1
             return str;
 
         }
+
+
+        //returns string for next interval for the text to speech
         public string MakeTextToInterval(Interval interval)//מכין את המחרוזת שאמורה להאמר
         {
             string result = "new interval,";
@@ -483,6 +528,7 @@ namespace AlfaVertion1
 
         }
 
+        //when there is no light shows an alert
         public void OnSensorChanged(SensorEvent e)
         {
             if (!checkLight)
@@ -529,13 +575,27 @@ namespace AlfaVertion1
             base.OnPause();
             UnregisterReceiver(broadCastBattery);
             sensorManager.UnregisterListener(this);
+            PauseMusic();
+        }
+
+        public void ResumeMusic()
+        {
+            Intent i = new Intent("music");
+            i.PutExtra("action", 1); // 1 to turn on
+            SendBroadcast(i);
+        }
+
+        public void PauseMusic()
+        {
+            Intent i = new Intent("music");
+            i.PutExtra("action", 0); // 0 to turn on
+            SendBroadcast(i);
         }
         public override void OnBackPressed()
         {
             base.OnBackPressed();
             Intent i1 = new Intent(this, typeof(MainActivity));
-            StartActivity(i1);
-            
+            StartActivity(i1);            
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {

@@ -69,6 +69,8 @@ namespace AlfaVertion1
               .OnceAsync<DbExercise>();
             return allPersons.Where(a => a.name == name).FirstOrDefault();
         }
+
+        //returns all the public exercises for the user
         public static async Task<List<Exercise>> GetAllPublic()
         {
             var allExercises = await GetAll();
@@ -77,6 +79,9 @@ namespace AlfaVertion1
 
             return allExercises.Where(a => a.user != mac && a.isPublic==true).ToList();
         }
+
+
+        //returns all personal exercises for the user 
         public static async Task<List<Exercise>> GetAllPersonalExercises()
         {
             var allExercises = await GetAll();
@@ -103,8 +108,14 @@ namespace AlfaVertion1
               .Child(database)
               .OnceAsync<Exercise>()).Where(a => a.Object.name == name).FirstOrDefault();
             await client.Child(database).Child(toDeletePerson.Key).DeleteAsync();
-
         }
-        
+        public static async Task Delete2(Exercise ex)
+        {
+            var toDeletePerson = (await client
+              .Child(database)
+              .OnceAsync<Exercise>()).Where(a => a.Object == ex).FirstOrDefault();
+            await client.Child(database).Child(toDeletePerson.Key).DeleteAsync();
+        }
+
     }
 }

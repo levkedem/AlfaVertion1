@@ -14,14 +14,14 @@ using Android.Widget;
 namespace AlfaVertion1
 {
     [BroadcastReceiver]
-    public class MusicPlayerBroadcastReciever : BroadcastReceiver
+    public class MusicBroadcastReciever : BroadcastReceiver
     {
-        MediaPlayer mp;
-        Thread t;
-        public MusicPlayerBroadcastReciever()
+        MediaPlayer mp;//plays the music
+        Thread t;// starts count down
+        public MusicBroadcastReciever()
         {
         }
-        public MusicPlayerBroadcastReciever(MediaPlayer mp)
+        public MusicBroadcastReciever(MediaPlayer mp)
         {
             this.mp = mp;
             mp.Looping = true;
@@ -39,7 +39,7 @@ namespace AlfaVertion1
                 Thread.Sleep(1000);
             }
 
-            MyService.musicStopped = true;
+            MusicService.musicStopped = true;
         }
 
         public override void OnReceive(Context context, Intent intent)
