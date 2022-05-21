@@ -178,7 +178,7 @@
                 android:layout_marginTop="7dp"
                 android:id="@+id/BtFinish"
                 android:background="#B0C4DE"
-                android:text="Finish"/>
+                android:text="run"/>
 
                 <Button
                 android:layout_width="wrap_content"

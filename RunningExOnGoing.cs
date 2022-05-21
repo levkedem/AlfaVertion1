@@ -594,6 +594,8 @@ namespace AlfaVertion1
         public override void OnBackPressed()
         {
             base.OnBackPressed();
+            Finish();
+            this.ExerciseState = false;
             Intent i1 = new Intent(this, typeof(MainActivity));
             StartActivity(i1);            
         }

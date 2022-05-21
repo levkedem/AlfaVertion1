@@ -16,10 +16,12 @@ namespace AlfaVertion1
     [Service]
     public class MusicService : Service
     {
-        MediaPlayer mp; // media player which plays the music
-        MusicBroadcastReciever musicPlayerBroadcast; // broadcast reciever, is registered with the media player an plays the music according to the user
+        MediaPlayer mp; // media player...
+        MusicBroadcastReciever musicPlayerBroadcast; // broadcast reciever for music
 
         public static bool musicStopped = false;
+
+        public bool didUnReg = false;
         public override void OnCreate()
         {
             base.OnCreate();
@@ -38,26 +40,19 @@ namespace AlfaVertion1
             SendBroadcast(i);
 
 
-            // thread which stops the service if music is stopped for a long time, user left the app
-            Thread t = new Thread(RunUntilMusicStopped);
-            t.Start();
-
             return base.OnStartCommand(intent, flags, startId);
-        }
-
-        private void RunUntilMusicStopped()
-        {
-            while (!musicStopped) ;
-            StopSelf();
-        }
+        }        
         public override void OnDestroy()
         {
-            UnregisterReceiver(this.musicPlayerBroadcast);
+            if (!didUnReg)
+            {
+                UnregisterReceiver(this.musicPlayerBroadcast);
+                didUnReg = true;
+            }            
             StopSelf();
             base.OnDestroy();
             
         }
-
         public override IBinder OnBind(Intent intent)
         {
             return null;

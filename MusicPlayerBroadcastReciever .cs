@@ -17,7 +17,6 @@ namespace AlfaVertion1
     public class MusicBroadcastReciever : BroadcastReceiver
     {
         MediaPlayer mp;//plays the music
-        Thread t;// starts count down
         public MusicBroadcastReciever()
         {
         }
@@ -31,17 +30,6 @@ namespace AlfaVertion1
             mp.SetVolume(1, 1);
 
         }
-
-        private void CountDownTilMusicStopped()
-        {
-            for (int i = 0; i < 100; i++)
-            {
-                Thread.Sleep(1000);
-            }
-
-            MusicService.musicStopped = true;
-        }
-
         public override void OnReceive(Context context, Intent intent)
         {
             //Toast.MakeText(context, "Received intent!", ToastLength.Short).Show();
@@ -50,14 +38,11 @@ namespace AlfaVertion1
             {
                 mp.Start();
                 mp.SetVolume((float)0.3, (float)0.3);
-                if (t != null && t.IsAlive)
-                    t.Abort();
+                
             }
             else if (action == 0)
             {
-                mp.Pause();
-                t = new Thread(CountDownTilMusicStopped);
-                t.Start();
+                mp.Pause();                
             }
         }
 

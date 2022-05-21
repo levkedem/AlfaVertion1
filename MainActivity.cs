@@ -22,7 +22,7 @@ namespace AlfaVertion1
     public class MainActivity : AppCompatActivity
     {
         Button btMakeRunning, btMakeExercise, btRecentWorkouts;
-        public static bool musicState;
+        public static bool musicState = true;
         public static bool ShowEndingDialog;
         Dialog d;
 
@@ -37,6 +37,7 @@ namespace AlfaVertion1
         public bool isJustStarted;
 
         bool shouldBeDestroyed;
+        public static bool isServiceAlive;//for music
         protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -64,9 +65,13 @@ namespace AlfaVertion1
             //btMakeExercise.Click += BtMakeExercise_Click;
             btRecentWorkouts.Click += BtRecentWorkouts_Click;
 
+            
             Intent intent = new Intent(this, typeof(MusicService));
             StartService(intent);
-            MainActivity.musicState = true;
+            
+            MainActivity.isServiceAlive = true;
+            
+            
             MainActivity.ShowEndingDialog = false;
 
             theOneInUse = null;
@@ -106,8 +111,8 @@ namespace AlfaVertion1
             MenuInflater.Inflate(Resource.Menu.menu1, menu);
 
             IMenuItem item = menu.GetItem(0);
-            item.SetTitle("mute");
-            /*
+            //item.SetTitle("mute");
+            
             if (musicState || isJustStarted)
             {
                 item.SetTitle("mute");
@@ -116,7 +121,7 @@ namespace AlfaVertion1
             else
             {
                 item.SetTitle("unmute");
-            }*/
+            }
             return true;
         }
         public override bool OnOptionsItemSelected(IMenuItem item)
@@ -159,17 +164,17 @@ namespace AlfaVertion1
             Intent i1 = new Intent(this, typeof(Construct_running_Activity));
             StartActivity(i1);
         }
-        public void ResumeMusic() // move to mainactivity
+        public void ResumeMusic() 
         {
             Intent i = new Intent("music");
-            i.PutExtra("action", 1); // 1 to turn on
+            i.PutExtra("action", 1); // 1 is on
             SendBroadcast(i);
         }
 
-        public void PauseMusic() // move to main
+        public void PauseMusic() 
         {
             Intent i = new Intent("music");
-            i.PutExtra("action", 0); // 0 to turn on
+            i.PutExtra("action", 0); // 0 is off
             SendBroadcast(i);
         }
         public override void OnBackPressed()
@@ -177,14 +182,19 @@ namespace AlfaVertion1
             
             if (this.shouldBeDestroyed)
             {
-                base.OnBackPressed();
-                OnPause();
-                base.OnDestroy();
+                //base.OnBackPressed();
+                //base.OnPause();
+                //base.OnDestroy();
+                //Finish();
+                //FinishAffinity();
+                //System.Exit();
+                //FinishAndRemoveTask();
+
             }
             else
             {
-                Toast.MakeText(this, "press again to exit", ToastLength.Short).Show();
-                this.shouldBeDestroyed = true;
+                //Toast.MakeText(this, "press again to exit", ToastLength.Short).Show();
+                //this.shouldBeDestroyed = true;
             }
         }
         protected override void OnPause()

@@ -93,7 +93,7 @@ namespace AlfaVertion1
         {
             if (e.Position != null)
             {
-                FirebaseHelper.Delete(this.privateEx[e.Position].name);//add awaut
+                FirebaseHelper.Delete2(this.privateEx[e.Position].date);//add awaut
 
 
                 DeleteExFromList(this.privateEx[e.Position]);

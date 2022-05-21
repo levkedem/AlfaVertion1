@@ -109,11 +109,11 @@ namespace AlfaVertion1
               .OnceAsync<Exercise>()).Where(a => a.Object.name == name).FirstOrDefault();
             await client.Child(database).Child(toDeletePerson.Key).DeleteAsync();
         }
-        public static async Task Delete2(Exercise ex)
+        public static async Task Delete2(DateTime dt)
         {
             var toDeletePerson = (await client
               .Child(database)
-              .OnceAsync<Exercise>()).Where(a => a.Object == ex).FirstOrDefault();
+              .OnceAsync<Exercise>()).Where(a => a.Object.date == dt).FirstOrDefault();
             await client.Child(database).Child(toDeletePerson.Key).DeleteAsync();
         }
 
