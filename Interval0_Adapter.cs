@@ -78,13 +78,24 @@ namespace AlfaVertion1
                 tvPace1.Text = temp.GetSpeed();
                 string s = ""+temp.GetAtrtribute() % 60;
                 if (temp.GetAtrtribute() % 60<10)
-                {
                     s = "0" + temp.GetAtrtribute() % 60;
-                }
+                
+                string m = "" + ((temp.GetAtrtribute() / 60) - (temp.GetAtrtribute() / 3600) * 60);
+                if ((temp.GetAtrtribute() / 60) - (temp.GetAtrtribute() / 3600) * 60 < 10)
+                    m = "0" + m;
+
+                string h = "" + temp.GetAtrtribute() / 3600;
+                if (temp.GetAtrtribute() /3600 < 10)
+                    h = "0" + h;
+
                 if (temp.GetType1().Equals("time"))
                 {
-                    
-                    tvLength1.Text = "" + temp.GetAtrtribute() / 60 + ":" + s;
+                    if (temp.GetAtrtribute() / 60 > 60)
+                    {
+                        tvLength1.Text = ""+h + ":" + m + ":" + s;
+                    }
+                    else 
+                        tvLength1.Text = "" + m + ":" + s;
                 }
                 else
                 {

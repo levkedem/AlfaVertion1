@@ -205,7 +205,14 @@ namespace AlfaVertion1
             }
             
             Construct_running_Activity.exercise = new Exercise(parts, this.etWorkOutName.Text,this.swIsPublic.Checked);
-            FirebaseHelper.Add(Construct_running_Activity.exercise); 
+            try
+            {
+                FirebaseHelper.Add(Construct_running_Activity.exercise);
+            }
+            catch
+            {
+                MainActivity.IsInternetGood = false;
+            }
             MainActivity.allExerci.Add(Construct_running_Activity.exercise);
             //UpdateDBNewExercise();
 

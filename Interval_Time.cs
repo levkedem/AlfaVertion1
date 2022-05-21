@@ -26,7 +26,7 @@ namespace AlfaVertion1
         
         public override int GetAtrtribute()
         {
-            return this.time.Seconds + this.time.Minutes * 60;
+            return this.time.Seconds + this.time.Minutes * 60 + this.time.Hours * 3600;
         }
         public override string GetSpeed()
         {

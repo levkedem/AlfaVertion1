@@ -38,6 +38,8 @@ namespace AlfaVertion1
 
         bool shouldBeDestroyed;
         public static bool isServiceAlive;//for music
+
+        public static bool IsInternetGood = true;
         protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -52,7 +54,14 @@ namespace AlfaVertion1
 
             //db.DeleteAll<Exercise>();
             */
-            MainActivity.allExerci = await FirebaseHelper.GetAll();
+            try
+            {
+                MainActivity.allExerci = await FirebaseHelper.GetAll();
+            }
+            catch
+            {
+                IsInternetGood = false;
+            }
 
             userName= this.GetSharedPreferences("details", FileCreationMode.Private);
             distanceInThisDvice = this.GetSharedPreferences("details2", FileCreationMode.Private);
@@ -149,8 +158,15 @@ namespace AlfaVertion1
 
         private void BtRecentWorkouts_Click(object sender, EventArgs e)
         {
-            Intent i1 = new Intent(this, typeof(RecentWorkoutsActivity1));
-            StartActivity(i1);
+            if (IsInternetGood)
+            {
+                Intent i1 = new Intent(this, typeof(RecentWorkoutsActivity1));
+                StartActivity(i1);
+            }
+            else
+            {
+                Toast.MakeText(this, "this feature is not active", ToastLength.Short).Show();
+            }
         }
 
         private void BtMakeExercise_Click(object sender, EventArgs e)

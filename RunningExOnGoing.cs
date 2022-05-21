@@ -490,10 +490,14 @@ namespace AlfaVertion1
             string result = "new interval,";
             if (interval.GetType1().Equals("time"))
             {
-                if (interval.GetSpeed().Equals("med"))
-                result = result + "run for " + interval.GetAtrtribute() / 60 + " minutes and " + interval.GetAtrtribute() % 60 + " seconds," + "Medium";
+                if (interval.GetAtrtribute() / 3600 > 0)
+                    result = result + "run for " + interval.GetAtrtribute() / 3600 + "hours " + ((interval.GetAtrtribute() / 60) - (interval.GetAtrtribute() / 3600) * 60) + " minutes and " + interval.GetAtrtribute() % 60 + " seconds,";
                 else
-                    result = result + "run for " + interval.GetAtrtribute() / 60 + " minutes and " + interval.GetAtrtribute() % 60 + " seconds," + interval.GetSpeed();
+                    result = result + "run for " + interval.GetAtrtribute() / 60 + " minutes and " + interval.GetAtrtribute() % 60 + " seconds,";
+                if (interval.GetSpeed().Equals("med"))
+                result = result +  "Medium";
+                else
+                    result = result + interval.GetSpeed();
             }
             else if (interval.GetType1().Equals("dis"))
             {
